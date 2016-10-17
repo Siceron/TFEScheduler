@@ -1,0 +1,47 @@
+{
+	"TFE": [
+		{
+			"code": "EPL1617-999",
+			"students":
+			[
+				{
+					"email": "student1@student.uclouvain.be",
+					"faculty": "SINF"
+				}
+			],
+			"advisors": 
+			[
+				{
+					"email": "advisor1@uclouvain.be",
+					"faculty": "INGI"
+				},
+				{
+					"email": "advisor2@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [true, false, false, true, true, false, false, true, true, false, true, false]
+				}
+			],
+			"readers":
+			[
+				{
+					"email": "reader1@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [false, false, false, true, false, true, true, false, true, false, true, true]
+				},
+				{
+					"email": "reader2@uclouvain.be",
+					"faculty": "INMA",
+					"disponibilities": [false, true, true, true, true, false, true, false, false, false, true, true]
+				}
+			]
+		}
+	],
+	"fixed":
+	[
+		{
+			"code": "EPL1617-999",
+			"session": 53
+		}
+	],
+	"banned": []
+}
