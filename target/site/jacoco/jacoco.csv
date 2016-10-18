@@ -1,0 +1,19 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+TFEScheduler,tests,JSONParsingTest,28,7,0,0,14,3,7,2,7,2
+TFEScheduler,tests,TestRunner,28,0,2,0,6,0,3,0,2,0
+TFEScheduler,utils,TFEJSONDeserializer.new TypeToken() {...},0,6,0,0,0,1,0,1,0,1
+TFEScheduler,utils,TFEJSONDeserializer.new TypeToken() {...},0,6,0,0,0,1,0,1,0,1
+TFEScheduler,utils,SessionTFEJSONDeserializer,0,27,0,0,0,8,0,2,0,2
+TFEScheduler,utils,JSONUtil,10,69,0,4,5,14,1,5,1,3
+TFEScheduler,utils,TFEJSONDeserializer,12,103,1,3,1,23,1,5,0,4
+TFEScheduler,utils,JuryJSONDeserializer,0,54,0,2,0,13,0,4,0,3
+TFEScheduler,utils,PersonJSONDeserializer,0,22,0,0,0,6,0,2,0,2
+TFEScheduler,utils,JuryJSONDeserializer.new TypeToken() {...},0,6,0,0,0,1,0,1,0,1
+TFEScheduler,utils,InputJSONDeserializer.new TypeToken() {...},0,6,0,0,0,1,0,1,0,1
+TFEScheduler,utils,InputJSONDeserializer.new TypeToken() {...},0,6,0,0,0,1,0,1,0,1
+TFEScheduler,utils,InputJSONDeserializer,5,109,1,3,1,22,1,5,0,4
+TFEScheduler,objects,TFE,45,27,1,1,19,11,13,2,12,2
+TFEScheduler,objects,JSONParsingObject,24,12,0,0,11,5,7,1,7,1
+TFEScheduler,objects,Person,14,9,0,0,6,4,4,1,4,1
+TFEScheduler,objects,Jury,7,8,0,0,3,3,2,1,2,1
+TFEScheduler,solver,Main,163,0,12,0,30,0,8,0,2,0
