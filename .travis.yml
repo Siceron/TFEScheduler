@@ -1,7 +1,4 @@
 language: java
-script:
-  - cd TFEScheduler
-  - mvn test
 jdk:
   - oraclejdk8
 after_success:
