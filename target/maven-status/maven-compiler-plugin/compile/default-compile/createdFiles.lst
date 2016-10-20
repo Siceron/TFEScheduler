@@ -1,4 +1,5 @@
 objects/Person.class
+objects/Session.class
 utils/JSONUtil.class
 utils/InputJSONDeserializer$2.class
 utils/SessionTFEJSONDeserializer.class
@@ -12,6 +13,8 @@ utils/TFEJSONDeserializer.class
 utils/JuryJSONDeserializer.class
 utils/TFEJSONDeserializer$1.class
 objects/TFE.class
+utils/OutputChecker$1.class
+utils/OutputChecker.class
 objects/Jury.class
 tests/JSONParsingTest.class
 tests/TestRunner.class
