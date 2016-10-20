@@ -1,7 +1,10 @@
 package utils;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,6 +31,8 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
         List<TFE> fixedList = getSessionTFEList("fixed", obj, true);
         
         List<TFE> bannedList = getSessionTFEList("banned", obj, false);
+        
+        tfeList = updateTFEList(tfeList, fixedList);
         
         JSONParsingObject jsonParsingObject = new JSONParsingObject(tfeList, fixedList, bannedList);
 		
@@ -56,5 +61,18 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
         	throw new JsonSyntaxException("Missing field in JSON: "+field);
         else
         	return fixedList;
+	}
+	
+	private List<TFE> updateTFEList(List<TFE> tfes, List<TFE> fixedList){
+		Map<String,TFE> map = new HashMap<String,TFE>();
+		for(TFE tfe : tfes) map.put(tfe.getCode(),tfe);
+		for(TFE fixed : fixedList){
+			TFE toBeUpdated = map.get(fixed.getCode());
+			if(toBeUpdated == null)
+				throw new JsonSyntaxException("Can't fix a session for a TFE that doesn't exist");
+			else
+				toBeUpdated.setFixedSession(fixed.getFixedSession());
+		}
+		return new ArrayList<TFE>(map.values());
 	}
 }

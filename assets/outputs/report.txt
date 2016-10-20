@@ -1,0 +1,4 @@
+Conflicts :
+	- Session 53 :
+		 - EPL1617-999
+		 - EPL1617-111
