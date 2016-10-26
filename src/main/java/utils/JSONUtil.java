@@ -19,18 +19,13 @@ import objects.TFE;
 
 public class JSONUtil {
 
-	public static JSONParsingObject parseJSON(String path){
-		try {
-			Reader reader = new FileReader(path);
-			GsonBuilder gsonBuilder = new GsonBuilder();
-			gsonBuilder.registerTypeAdapter(JSONParsingObject.class, new InputJSONDeserializer());
-			Gson gson = gsonBuilder.create();
-			JSONParsingObject jsonParsingObject = gson.fromJson(reader, JSONParsingObject.class);
-			return jsonParsingObject;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public static JSONParsingObject parseJSON(String path) throws FileNotFoundException{
+		Reader reader = new FileReader(path);
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(JSONParsingObject.class, new InputJSONDeserializer());
+		Gson gson = gsonBuilder.create();
+		JSONParsingObject jsonParsingObject = gson.fromJson(reader, JSONParsingObject.class);
+		return jsonParsingObject;
 	}
 
 	public static void writeJSON(String path, List<TFE> tfes){
@@ -69,7 +64,7 @@ public class JSONUtil {
 			return element.getAsInt();
 		}
 	}
-	
+
 	public static boolean isInteger(JsonElement element) {
 		try{
 			element.getAsInt();

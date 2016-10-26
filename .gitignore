@@ -1,5 +1,7 @@
 *.class
 
+target/
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -27,6 +29,9 @@ local.properties
 
 # Eclipse Core
 .project
+org.eclipse.core.resources.prefs
+org.eclipse.jdt.core.prefs
+org.eclipse.m2e.core.prefs
 
 # External tool builders
 .externalToolBuilders/

@@ -42,7 +42,6 @@ public class OutputChecker {
 				}
 			}
 			bw.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

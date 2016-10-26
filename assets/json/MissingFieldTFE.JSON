@@ -1,0 +1,88 @@
+{
+	"Test": [
+		{
+			"code": "EPL1617-999",
+			"students":
+			[
+				{
+					"email": "student1@student.uclouvain.be",
+					"faculty": "SINF"
+				}
+			],
+			"advisors": 
+			[
+				{
+					"email": "advisor1@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [false, true, false, true, true, false, true, false, true, false, true, false]
+				},
+				{
+					"email": "advisor2@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [true, false, false, true, true, false, false, true, true, false, true, false]
+				}
+			],
+			"readers":
+			[
+				{
+					"email": "reader1@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [false, false, false, true, false, true, true, false, true, false, true, true]
+				},
+				{
+					"email": "reader2@uclouvain.be",
+					"faculty": "INMA",
+					"disponibilities": [false, true, true, true, true, false, true, false, false, false, true, true]
+				}
+			]
+		},
+		{
+			"code": "EPL1617-111",
+			"students":
+			[
+				{
+					"email": "student2@student.uclouvain.be",
+					"faculty": "SINF"
+				}
+			],
+			"advisors": 
+			[
+				{
+					"email": "advisor1@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [false, true, false, true, true, false, true, false, true, false, true, false]
+				},
+				{
+					"email": "advisor2@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [true, false, false, true, true, false, false, true, true, false, true, false]
+				}
+			],
+			"readers":
+			[
+				{
+					"email": "reader1@uclouvain.be",
+					"faculty": "INGI",
+					"disponibilities": [false, false, false, true, false, true, true, false, true, false, true, true]
+				},
+				{
+					"email": "reader2@uclouvain.be",
+					"faculty": "INMA",
+					"disponibilities": [false, true, true, true, true, false, true, false, false, false, true, true]
+				}
+			]
+		}
+	],
+	"fixed":
+	[
+		{
+			"code": "EPL1617-999",
+			"session": 53
+		},
+		{
+			"code": "EPL1617-111",
+			"session": 53
+		}
+	],
+	"banned": []
+}
