@@ -24,12 +24,18 @@ import objects.TFE;
  */
 public class SecretaryAssign {
 
-	private JSONParsingObject infos;
 	private Map<String, List<TFE>> secretaryMap;
 
 	public SecretaryAssign(JSONParsingObject infos) {
-		this.infos = infos;
 		this.secretaryMap = new HashMap<String, List<TFE>>();
+		fillSecretaryMap(infos);
+	}
+	
+	/**
+	 * Enter the informations into the secretary map
+	 * @param infos : the informations to put in the map
+	 */
+	private void fillSecretaryMap(JSONParsingObject infos){
 		secretaryMap.put("ELEC", new ArrayList<TFE>());
 		secretaryMap.put("ELME", new ArrayList<TFE>());
 		secretaryMap.put("GBIO", new ArrayList<TFE>());
@@ -40,18 +46,6 @@ public class SecretaryAssign {
 		secretaryMap.put("SINF", new ArrayList<TFE>());
 		secretaryMap.put("MAP", new ArrayList<TFE>());
 		secretaryMap.put("MECA", new ArrayList<TFE>());
-	}
-	
-	public SecretaryAssign(JSONParsingObject infos, List<Secretary> secretaries){
-		this(infos);
-		
-	}
-
-	/**
-	 * Return a map with each faculty and its TFE associated
-	 * @return A Map key<String>:faculty, value<List<TFE>>:tfes
-	 */
-	public Map<String, List<TFE>> solve(){
 		List<TFE> tfes = infos.getTfes();
 		for(TFE tfe : tfes){
 			String faculty = getFaculty(tfe).toUpperCase();
@@ -66,6 +60,13 @@ public class SecretaryAssign {
 			else
 				System.out.println("Faculty : "+faculty+" does not exist");
 		}
+	}
+
+	/**
+	 * Return a map with each faculty and its TFE associated
+	 * @return A Map key<String>:faculty, value<List<TFE>>:tfes
+	 */
+	public Map<String, List<TFE>> solve(){
 		return secretaryMap;
 	}
 	
@@ -74,20 +75,6 @@ public class SecretaryAssign {
 	 * @param secretaries : The list of secretaries
 	 */
 	public void solve(List<Secretary> secretaries){
-		List<TFE> tfes = infos.getTfes();
-		for(TFE tfe : tfes){
-			String faculty = getFaculty(tfe).toUpperCase();
-			if(faculty.equals("INGI"))
-				faculty = "INFO";
-			else if(faculty.equals("ELEN"))
-				faculty = "ELEC";
-			else if(faculty.equals("INMA"))
-				faculty = "MAP";
-			if(secretaryMap.containsKey(faculty))
-				secretaryMap.get(faculty).add(tfe);
-			else
-				System.out.println("Faculty : "+faculty+" does not exist");
-		}
 		for(Secretary secretary : secretaries){
 			for(String faculty : secretary.getFaculties()){
 				if(secretaryMap.containsKey(faculty))
@@ -120,7 +107,7 @@ public class SecretaryAssign {
 	 * @param map : the map containing the values
 	 * @return A String representing the key with the largest value
 	 */
-	public String keyOfMaxValue(Map<String, Integer> map) {
+	private String keyOfMaxValue(Map<String, Integer> map) {
 		Comparator<? super Entry<String, Integer>> maxValueComparator = (entry1, entry2) ->
 		entry1.getValue().compareTo(entry2.getValue());
 

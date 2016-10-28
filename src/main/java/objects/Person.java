@@ -15,15 +15,7 @@ public class Person {
 		return email;
 	}
 	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
 	public String getFaculty() {
 		return faculty;
-	}
-	
-	public void setFaculty(String faculty) {
-		this.faculty = faculty;
 	}
 }

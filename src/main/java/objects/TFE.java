@@ -32,32 +32,16 @@ public class TFE {
 		return code;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
 	public List<Person> getStudents() {
 		return students;
-	}
-
-	public void setStudents(List<Person> students) {
-		this.students = students;
 	}
 
 	public List<Jury> getAdvisors() {
 		return advisors;
 	}
 
-	public void setAdvisors(List<Jury> advisors) {
-		this.advisors = advisors;
-	}
-
 	public List<Jury> getReaders() {
 		return readers;
-	}
-
-	public void setReaders(List<Jury> readers) {
-		this.readers = readers;
 	}
 
 	public int getFixedSession() {
@@ -70,10 +54,6 @@ public class TFE {
 
 	public int getBannedSession() {
 		return bannedSession;
-	}
-
-	public void setBannedSession(int bannedSession) {
-		this.bannedSession = bannedSession;
 	}
 
 	@Override

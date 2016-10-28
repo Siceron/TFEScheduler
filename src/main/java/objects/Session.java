@@ -15,15 +15,7 @@ public class Session {
 		return code;
 	}
 	
-	public void setCode(String code) {
-		this.code = code;
-	}
-	
 	public int getSession() {
 		return session;
-	}
-	
-	public void setSession(int session) {
-		this.session = session;
 	}
 }

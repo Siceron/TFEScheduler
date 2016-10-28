@@ -14,8 +14,4 @@ public class Jury extends Person {
 	public List<Boolean> getDisponibilities() {
 		return disponibilities;
 	}
-
-	public void setDisponibilities(List<Boolean> disponibilities) {
-		this.disponibilities = disponibilities;
-	}
 }
