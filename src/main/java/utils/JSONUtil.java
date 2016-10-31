@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -12,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
 import objects.JSONParsingObject;
@@ -60,7 +62,7 @@ public class JSONUtil {
 			throw new JsonSyntaxException("Missing field in JSON: "+field);
 		else{
 			if(!isInteger(element))
-				throw new JsonSyntaxException("Session must be an Integer");
+				throw new JsonSyntaxException(field+" must be an Integer");
 			return element.getAsInt();
 		}
 	}
@@ -72,5 +74,15 @@ public class JSONUtil {
 			return false;
 		}
 		return true;
+	}
+	
+	public static List<String> getStringList(String field, JsonObject obj){
+		Type stringType = new TypeToken<List<String>>(){}.getType();
+		Gson gson = new Gson();
+		List<String> stringList = gson.fromJson(obj.get(field), stringType);
+        if (stringList == null)
+        	throw new JsonSyntaxException("Missing field in JSON: "+field);
+        else
+        	return stringList;
 	}
 }

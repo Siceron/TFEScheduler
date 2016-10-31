@@ -17,6 +17,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import objects.JSONParsingObject;
+import objects.Jury;
+import objects.Secretary;
 import objects.TFE;
 
 public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject> {
@@ -26,22 +28,36 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 		
 		JsonObject obj = jsonElement.getAsJsonObject();
 		
-        List<TFE> tfeList = getTFEList("TFE", obj);
-        
+		int sessionNumber = JSONUtil.getInt("sessionNumber", obj);
+		int sessionDays = JSONUtil.getInt("sessionDays", obj);
+		int sessionRooms = JSONUtil.getInt("sessionRooms", obj);
+		
+		List<Secretary> secretaries = getSecretaries("secretaries", obj);
+		List<Jury> advisorList = getJuryList("advisors", obj);
+		List<Jury> readerList = getJuryList("readers", obj);
+		
+        List<TFE> tfeList = getTFEList("TFE", obj, advisorList, readerList);
         List<TFE> fixedList = getSessionTFEList("fixed", obj, true);
-        
         List<TFE> bannedList = getSessionTFEList("banned", obj, false);
-        
         tfeList = updateTFEList(tfeList, fixedList);
         
-        JSONParsingObject jsonParsingObject = new JSONParsingObject(tfeList, fixedList, bannedList);
+        JSONParsingObject jsonParsingObject = new JSONParsingObject(sessionNumber, sessionDays, sessionRooms, 
+        		secretaries, advisorList, readerList, tfeList, fixedList, bannedList);
 		
 		return jsonParsingObject;
 	}
 
-	private List<TFE> getTFEList(String field, JsonObject obj){
+	private List<TFE> getTFEList(String field, JsonObject obj, List<Jury> advisorList, List<Jury> readerList){
+		Map<String, Jury> advisorsMap = new HashMap<String, Jury>();
+		for(Jury advisor : advisorList){
+			advisorsMap.put(advisor.getEmail(), advisor);
+		}
+		Map<String, Jury> readersMap = new HashMap<String, Jury>();
+		for(Jury reader : readerList){
+			advisorsMap.put(reader.getEmail(), reader);
+		}
 		GsonBuilder tfeGsonBuilder = new GsonBuilder();
-		tfeGsonBuilder.registerTypeAdapter(TFE.class, new TFEJSONDeserializer());
+		tfeGsonBuilder.registerTypeAdapter(TFE.class, new TFEJSONDeserializer(advisorsMap, readersMap));
 		Gson tfeGson = tfeGsonBuilder.create();
         Type tfesType = new TypeToken<List<TFE>>(){}.getType();
         List<TFE> tfeList = tfeGson.fromJson(obj.get(field), tfesType);
@@ -74,5 +90,29 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 				toBeUpdated.setFixedSession(fixed.getFixedSession());
 		}
 		return new ArrayList<TFE>(map.values());
+	}
+	
+	private List<Secretary> getSecretaries(String field, JsonObject obj){
+		GsonBuilder secretariesGsonBuilder = new GsonBuilder();
+		secretariesGsonBuilder.registerTypeAdapter(TFE.class, new SecretaryJSONDeserializer());
+		Gson secretariesGson = secretariesGsonBuilder.create();
+        Type secretariesType = new TypeToken<List<Secretary>>(){}.getType();
+        List<Secretary> secretaries = secretariesGson.fromJson(obj.get(field), secretariesType);
+        if (secretaries == null)
+        	throw new JsonSyntaxException("Missing field in JSON: "+field);
+        else
+        	return secretaries;
+	}
+	
+	private List<Jury> getJuryList(String field, JsonObject obj){
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Jury.class, new JuryJSONDeserializer());
+		Gson gson = gsonBuilder.create();
+		Type juryType = new TypeToken<List<Jury>>(){}.getType();
+		List<Jury> juryList = gson.fromJson(obj.get(field), juryType);
+        if (juryList == null)
+        	throw new JsonSyntaxException("Missing field in JSON: "+field);
+        else
+        	return juryList;
 	}
 }

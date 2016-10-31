@@ -20,6 +20,8 @@ public class Secretary{
 	}
 	
 	public void addTfeList(List<TFE> tfes){
+		if(this.tfes == null)
+			this.tfes = new ArrayList<TFE>();
 		this.tfes.addAll(tfes);
 	}
 
@@ -29,5 +31,10 @@ public class Secretary{
 
 	public List<String> getFaculties() {
 		return faculties;
+	}
+	
+	@Override
+	public String toString(){
+		return email;
 	}
 }

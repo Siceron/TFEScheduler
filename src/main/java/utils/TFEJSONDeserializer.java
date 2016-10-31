@@ -1,7 +1,9 @@
 package utils;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +21,15 @@ import objects.TFE;
 
 public class TFEJSONDeserializer implements JsonDeserializer<TFE> {
 	
+	private Map<String, Jury> advisorsMap;
+	private Map<String, Jury> readersMap;
+	
+	public TFEJSONDeserializer(Map<String, Jury> advisorsMap, Map<String, Jury> readersMap) {
+		super();
+		this.advisorsMap = advisorsMap;
+		this.readersMap = readersMap;
+	}
+
 	public TFE deserialize(JsonElement jsonElement, Type type,
 			JsonDeserializationContext jsonDeserializationContext) throws JsonParseException, JsonSyntaxException {
 		
@@ -27,12 +38,10 @@ public class TFEJSONDeserializer implements JsonDeserializer<TFE> {
 		String code = JSONUtil.getString("code", obj);
 		
 		List<Person> studentList = getPersonList(obj);
+		List<Jury> advisorsList = getJuryList("advisors", obj, advisorsMap);
+		List<Jury> readersList = getJuryList("readers", obj, readersMap);
 		
-		List<Jury> advisorList = getJuryList("advisors", obj);
-		
-		List<Jury> readerList = getJuryList("readers", obj);
-		
-		TFE tfe = new TFE(code, studentList, advisorList, readerList);
+		TFE tfe = new TFE(code, studentList, advisorsList, readersList);
 		
 		return tfe;
 	}
@@ -49,15 +58,12 @@ public class TFEJSONDeserializer implements JsonDeserializer<TFE> {
         	return personList;
 	}
 	
-	private List<Jury> getJuryList(String field, JsonObject obj){
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.registerTypeAdapter(Jury.class, new JuryJSONDeserializer());
-		Gson gson = gsonBuilder.create();
-		Type juryType = new TypeToken<List<Jury>>(){}.getType();
-		List<Jury> juryList = gson.fromJson(obj.get(field), juryType);
-        if (juryList == null)
-        	throw new JsonSyntaxException("Missing field in JSON: "+field);
-        else
-        	return juryList;
+	private List<Jury> getJuryList(String field, JsonObject obj, Map<String, Jury> juryMap){
+		List<Jury> juryList = new ArrayList<Jury>();
+		List<String> emailList = JSONUtil.getStringList(field, obj);
+		for(String email : emailList){
+			juryList.add(juryMap.get(email));
+		}
+		return juryList;
 	}
 }
