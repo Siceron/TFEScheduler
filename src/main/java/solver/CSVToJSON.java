@@ -45,7 +45,7 @@ public class CSVToJSON {
 				JsonWriter writer = new JsonWriter(new FileWriter(args[3]));
 				writer.jsonValue(gson.toJson(object));
 				writer.close();
-				System.out.println(gson.toJson(object));
+				//System.out.println(gson.toJson(object));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -78,6 +78,9 @@ public class CSVToJSON {
 		faculties = new ArrayList<String>();
 		faculties.add("MECA");
 		secretaries.add(new Secretary("secretary6@uclouvain.be", faculties));
+		faculties = new ArrayList<String>();
+		faculties.add("UNK");
+		secretaries.add(new Secretary("secretary-poubelle@uclouvain.be", faculties));
 		return secretaries;
 	}
 	
@@ -96,7 +99,7 @@ public class CSVToJSON {
 					isFirst = false;
 				else{
 					String[] array = line.split(cvsSplitBy);
-					advisors.put(array[4], array[3]);
+					advisors.put(array[4].trim(), array[3].trim());
 				}
 			}
 
@@ -224,11 +227,11 @@ public class CSVToJSON {
 								faculty = "MAP";
 							else if(studentArray[i].contains("MECA"))
 								faculty = "MECA";
-							students.add(new Person(element.get(4).split(",")[i], faculty));
+							students.add(new Person(element.get(4).split(",")[i].trim(), faculty));
 						}
 						String[] advisorsArray = element.get(2).split(" - ");
 						for(int i = 0 ; i < advisorsArray.length ; i++){
-							String email = element.get(4).split(",")[studentArray.length+i];
+							String email = element.get(4).split(",")[studentArray.length+i].trim();
 							Jury advisor = new Jury(email,advisorsFaculty.getOrDefault(email, "UNK"), getRandomDisponibilities());
 							advisors.add(advisor);
 							if(!advisorsMap.containsKey(advisor.getEmail()))
@@ -236,7 +239,7 @@ public class CSVToJSON {
 						}
 						String[] readersArray = element.get(3).split(" - ");
 						for(int i = 0 ; i < readersArray.length ; i++){
-							String email = element.get(4).split(",")[studentArray.length+advisorsArray.length+i];
+							String email = element.get(4).split(",")[studentArray.length+advisorsArray.length+i].trim();
 							Jury reader = new Jury(email,advisorsFaculty.getOrDefault(email, "UNK"), getRandomDisponibilities());
 							advisors.add(reader);
 							if(!readersMap.containsKey(reader.getEmail()))

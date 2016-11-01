@@ -30,7 +30,7 @@ public class SecretaryAssign {
 		this.secretaryMap = new HashMap<String, List<TFE>>();
 		fillSecretaryMap(infos);
 	}
-	
+
 	/**
 	 * Enter the informations into the secretary map
 	 * @param infos : the informations to put in the map
@@ -46,6 +46,7 @@ public class SecretaryAssign {
 		secretaryMap.put("SINF", new ArrayList<TFE>());
 		secretaryMap.put("MAP", new ArrayList<TFE>());
 		secretaryMap.put("MECA", new ArrayList<TFE>());
+		secretaryMap.put("UNK", new ArrayList<TFE>());
 		List<TFE> tfes = infos.getTfes();
 		for(TFE tfe : tfes){
 			String faculty = getFaculty(tfe).toUpperCase();
@@ -59,6 +60,7 @@ public class SecretaryAssign {
 				secretaryMap.get(faculty).add(tfe);
 			else
 				System.out.println("Faculty : "+faculty+" does not exist");
+
 		}
 	}
 
@@ -69,7 +71,7 @@ public class SecretaryAssign {
 	public Map<String, List<TFE>> solve(){
 		return secretaryMap;
 	}
-	
+
 	/**
 	 * Assign the tfes for all the secretaries
 	 * @param secretaries : The list of secretaries
@@ -93,23 +95,26 @@ public class SecretaryAssign {
 		Map<String, Integer> facultyOccurrenceMap = new HashMap<String, Integer>();
 		for(Person student : tfe.getStudents()){
 			String faculty = student.getFaculty();
-			if(faculty != "UNK")
+			if(!faculty.equals("UNK"))
 				facultyOccurrenceMap.put(faculty,
 						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
 		for(Jury advisor : tfe.getAdvisors()){
 			String faculty = advisor.getFaculty();
-			if(faculty != "UNK")
+			if(!faculty.equals("UNK"))
 				facultyOccurrenceMap.put(faculty,
 						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
 		for(Jury reader : tfe.getAdvisors()){
 			String faculty = reader.getFaculty();
-			if(faculty != "UNK")
+			if(!faculty.equals("UNK"))
 				facultyOccurrenceMap.put(faculty,
 						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
-		return keyOfMaxValue(facultyOccurrenceMap);
+		if(facultyOccurrenceMap.isEmpty())
+			return "UNK";
+		else
+			return keyOfMaxValue(facultyOccurrenceMap);
 	}
 
 	/**
@@ -122,7 +127,7 @@ public class SecretaryAssign {
 		entry1.getValue().compareTo(entry2.getValue());
 
 		Optional<Entry<String, Integer>> maxValue = map.entrySet()
-						.stream().max(maxValueComparator);
+				.stream().max(maxValueComparator);
 
 		return maxValue.get().getKey();
 	}
