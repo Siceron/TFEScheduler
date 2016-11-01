@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
 import objects.JSONParsingObject;
+import objects.Jury;
 import objects.TFE;
 
 public class JSONUtil {
@@ -79,10 +81,24 @@ public class JSONUtil {
 	public static List<String> getStringList(String field, JsonObject obj){
 		Type stringType = new TypeToken<List<String>>(){}.getType();
 		Gson gson = new Gson();
-		List<String> stringList = gson.fromJson(obj.get(field), stringType);
-        if (stringList == null)
-        	throw new JsonSyntaxException("Missing field in JSON: "+field);
-        else
-        	return stringList;
+		try{
+			List<String> stringList = gson.fromJson(obj.get(field), stringType);
+	        if (stringList == null)
+	        	throw new JsonSyntaxException("Missing field in JSON: "+field);
+	        else
+	        	return stringList;
+		}catch(Exception e){ // If json is list of jury instead of list of string
+			Type juryType = new TypeToken<List<Jury>>(){}.getType();
+			List<Jury> juryList = gson.fromJson(obj.get(field), juryType);
+			if (juryList == null)
+	        	throw new JsonSyntaxException("Missing field in JSON: "+field);
+	        else{
+	        	List<String> stringList = new ArrayList<String>();
+	        	for(Jury jury : juryList){
+	        		stringList.add(jury.getEmail());
+	        	}
+	        	return stringList;
+	        }
+		}
 	}
 }

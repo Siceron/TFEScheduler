@@ -2,3 +2,5 @@ Conflicts :
 	- Session 12 :
 		 - EPL1617-999
 		 - EPL1617-111
+Not assigned :
+	 Every TFE is assigned

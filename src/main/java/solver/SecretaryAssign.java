@@ -92,12 +92,22 @@ public class SecretaryAssign {
 	private String getFaculty(TFE tfe){
 		Map<String, Integer> facultyOccurrenceMap = new HashMap<String, Integer>();
 		for(Person student : tfe.getStudents()){
-			facultyOccurrenceMap.put(student.getFaculty(),
-					facultyOccurrenceMap.getOrDefault(student.getFaculty(), 0)+1);
+			String faculty = student.getFaculty();
+			if(faculty != "UNK")
+				facultyOccurrenceMap.put(faculty,
+						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
 		for(Jury advisor : tfe.getAdvisors()){
-			facultyOccurrenceMap.put(advisor.getFaculty(),
-					facultyOccurrenceMap.getOrDefault(advisor.getFaculty(), 0)+1);
+			String faculty = advisor.getFaculty();
+			if(faculty != "UNK")
+				facultyOccurrenceMap.put(faculty,
+						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
+		}
+		for(Jury reader : tfe.getAdvisors()){
+			String faculty = reader.getFaculty();
+			if(faculty != "UNK")
+				facultyOccurrenceMap.put(faculty,
+						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
 		return keyOfMaxValue(facultyOccurrenceMap);
 	}

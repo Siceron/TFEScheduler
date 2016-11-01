@@ -54,7 +54,7 @@
 			"disponibilities": [false, true, true, true, true, false, true, false, false, false, true, true]
 		}
 	],
-	"TFE": [
+	"tfes": [
 		{
 			"code": "EPL1617-999",
 			"students":

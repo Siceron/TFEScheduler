@@ -34,13 +34,28 @@ public class OutputChecker {
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write("Conflicts :\n");
+			boolean isConflicts = false;
 			for (Entry<Integer, List<String>> entry : map.entrySet()) {
 				List<String> value = entry.getValue();
-				if(value.size() > 1){
+				if(value.size() > 1 && entry.getKey() != -1){
+					isConflicts = true;
 					bw.write("\t- Session "+entry.getKey()+" :\n");
 					for(String code : value) bw.write("\t\t - "+code+"\n");
 				}
 			}
+			if(!isConflicts)
+				bw.write("\t No conflicts\n");
+			bw.write("Not assigned :\n");
+			boolean notAssigned = false;
+			for (Entry<Integer, List<String>> entry : map.entrySet()) {
+				List<String> value = entry.getValue();
+				if(entry.getKey() == -1){
+					notAssigned = true;
+					for(String code : value) bw.write("\t - "+code+"\n");
+				}
+			}
+			if(!notAssigned)
+				bw.write("\t Every TFE is assigned\n");
 			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -36,7 +36,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 		List<Jury> advisorList = getJuryList("advisors", obj);
 		List<Jury> readerList = getJuryList("readers", obj);
 		
-        List<TFE> tfeList = getTFEList("TFE", obj, advisorList, readerList);
+        List<TFE> tfeList = getTFEList("tfes", obj, advisorList, readerList);
         List<TFE> fixedList = getSessionTFEList("fixed", obj, true);
         List<TFE> bannedList = getSessionTFEList("banned", obj, false);
         tfeList = updateTFEList(tfeList, fixedList);
@@ -62,7 +62,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
         Type tfesType = new TypeToken<List<TFE>>(){}.getType();
         List<TFE> tfeList = tfeGson.fromJson(obj.get(field), tfesType);
         if (tfeList == null)
-        	throw new JsonSyntaxException("Missing field in JSON: TFE");
+        	throw new JsonSyntaxException("Missing field in JSON: "+field);
         else
         	return tfeList;
 	}

@@ -17,6 +17,7 @@ public class TFE {
 		this.students = students;
 		this.advisors = advisors;
 		this.readers = readers;
+		this.fixedSession = -1;
 	}
 	
 	public TFE(String code, int session, boolean isFixed) {
