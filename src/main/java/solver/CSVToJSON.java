@@ -36,7 +36,7 @@ public class CSVToJSON {
 			disponibilities = disponibilities(args[1]);
 			advisorsFaculty = advisors(args[2]);
 			List<TFE> tfes = tfes(args[0]);
-			JSONParsingObject object = new JSONParsingObject(12, 3, 10, secretaries(), new ArrayList<Jury>(advisorsMap.values()),
+			JSONParsingObject object = new JSONParsingObject(240, 3, 20, secretaries(), new ArrayList<Jury>(advisorsMap.values()),
 					new ArrayList<Jury>(readersMap.values()), tfes, new ArrayList<TFE>(), new ArrayList<TFE>());
 			try {
 				GsonBuilder gsonBuilder = new GsonBuilder();

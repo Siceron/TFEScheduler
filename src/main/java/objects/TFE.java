@@ -1,5 +1,6 @@
 package objects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TFE {
@@ -55,6 +56,29 @@ public class TFE {
 
 	public int getBannedSession() {
 		return bannedSession;
+	}
+	
+	public boolean containsJury(Jury jury){
+		for(Jury j : advisors){
+			if(j.getEmail().equals(jury.getEmail()))
+				return true;
+		}
+		for(Jury j : readers){
+			if(j.getEmail().equals(jury.getEmail()))
+				return true;
+		}
+		return false;
+	}
+	
+	public List<Jury> getJuryList(){
+		List<Jury> juryList = new ArrayList<Jury>();
+		for(Jury j : readers){
+			juryList.add(j);
+		}
+		for(Jury j : advisors){
+			juryList.add(j);
+		}
+		return juryList;
 	}
 
 	@Override

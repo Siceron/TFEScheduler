@@ -3,7 +3,6 @@ package tests;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -16,7 +15,7 @@ import utils.OutputChecker;
 public class OutputCheckerTest {
 
 	@Test
-	public void writeJSON() throws FileNotFoundException{
+	public void writeJSON() throws IOException{
 		String reportPath = "assets/outputs/report.txt";
 		String outputJSONPath = "assets/outputs/output.JSON";
 		JSONParsingObject jsonParsingObject = JSONUtil.parseJSON("assets/json/InputTemplate.JSON");
@@ -27,7 +26,8 @@ public class OutputCheckerTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		OutputChecker.writeReport(reportPath, outputJSONPath);
+		OutputChecker report = new OutputChecker(outputJSONPath, jsonParsingObject);
+		report.writeReport(reportPath);
 		assertTrue(file.exists());
 	}
 }
