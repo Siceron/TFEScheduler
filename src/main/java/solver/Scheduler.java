@@ -35,16 +35,18 @@ public class Scheduler {
 
 	public void solve(int timeLimit){
 		try {
-			GRBEnv    env   = new GRBEnv("mip1.log");
+			GRBEnv    env   = new GRBEnv("scheduler.log");
 			GRBModel  model = new GRBModel(env);
 
 			nbrSessions = jsonParsingObject.getSessionNumber();
 			juryList = getJuryList();
 			tfeList = jsonParsingObject.getTfes();
+			preprocessing();
 			nbrJury = juryList.size();
 			nbrTFE = tfeList.size();
 			nbrRooms = jsonParsingObject.getSessionRooms();
 			juryTFENbr = getJuryTFENbr(juryList);
+
 
 			// Create variables
 			tfes = new GRBVar[nbrTFE][nbrSessions];
@@ -74,13 +76,13 @@ public class Scheduler {
 				insidelinExpr.addConstant(Math.ceil(juryTFENbr.get(i)/3.0));
 				expr.multAdd(juryTFENbr.get(i), insidelinExpr);
 			}
-			for(int i = 0 ; i < tfes.length ; i++){
+			/*for(int i = 0 ; i < tfes.length ; i++){
 				GRBLinExpr memExpr = new GRBLinExpr();
 				for(int t = 0 ; t < tfes[0].length ; t++){
 					memExpr.addTerm(-10, tfes[i][t]);
 				}
 				expr.add(memExpr);
-			}
+			}*/
 			model.setObjective(expr, GRB.MINIMIZE);
 
 			addMoreProfsThanTFEConstraint(model);
@@ -97,10 +99,10 @@ public class Scheduler {
 
 			//model.getEnv().set(GRB.IntParam.SolutionLimit, 1);
 			model.getEnv().set(GRB.DoubleParam.TimeLimit, 60*timeLimit);
-			
+
 			// Optimize model
 			model.optimize();
-			
+
 			System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
 
 			for(int i = 0 ; i < tfes.length ; i++){
@@ -112,14 +114,14 @@ public class Scheduler {
 					}
 				}
 			}
-			
-			for(int i = 0 ; i < profs.length ; i++){
+
+			/*for(int i = 0 ; i < profs.length ; i++){
 				for(int t = 0 ; t < profs[0].length ; t++){
 					if(profs[i][t].get(GRB.DoubleAttr.X) == 1.0){
 						juryList.get(i).addSession(t);
 					}
 				}
-			}
+			}*/
 
 			model.write("assets/outputs/scheduler.sol");
 
@@ -129,6 +131,34 @@ public class Scheduler {
 		} catch (GRBException e) {
 			System.out.println("Error code: " + e.getErrorCode() + ". " +
 					e.getMessage());
+		}
+	}
+
+	/**
+	 * Remove all the unsolvable tfes from the solver
+	 */
+	private void preprocessing(){
+		List<TFE> tfesToBeRemoved = new ArrayList<TFE>();
+		for(TFE t : tfeList){
+			boolean mustRemove = true;
+			for(int d = 0 ; d < 12 ; d++){
+				boolean allSet = true;
+				for(Jury j : t.getJuryList()){
+					if(!j.getDisponibilities().get(d))
+						allSet = false;
+				}
+				if(allSet){
+					mustRemove = false;
+					break;
+				}
+			}
+			if(mustRemove){
+				tfesToBeRemoved.add(t);
+			}
+		}
+		for(TFE t : tfesToBeRemoved){
+			tfeList.remove(t);
+			System.out.println(t.getCode()+" removed");
 		}
 	}
 
@@ -157,7 +187,7 @@ public class Scheduler {
 	}
 
 	/**
-	 * Add constraint : tfes[i][t] <= 1
+	 * Add constraint : tfes[i][t] == 1
 	 * One tfe i can be assigned to only one session
 	 * @param model : the GRBModel
 	 */
@@ -168,7 +198,7 @@ public class Scheduler {
 				for(int t = 0 ; t < nbrSessions ; t++){
 					expr.addTerm(1, tfes[i][t]);
 				}
-				model.addConstr(expr, GRB.LESS_EQUAL, 1, "cM"+i);
+				model.addConstr(expr, GRB.EQUAL, 1, "cM"+i);
 			}
 		} catch (GRBException e) {
 			System.out.println("Error code: " + e.getErrorCode() + ". " +
@@ -245,19 +275,6 @@ public class Scheduler {
 		try{
 			/*for(int i = 0 ; i < tfes.length ; i++){
 				for(Jury j : tfeList.get(i).getJuryList()){
-					GRBLinExpr expr = new GRBLinExpr();
-					for(int t = 0 ; t < nbrSessions ; t++){
-						//GRBQuadExpr quadExpr = new GRBQuadExpr();
-						//quadExpr.addTerm(1, tfes[i][t], profs[juryList.indexOf(j)][t]);
-						//expr.add(quadExpr.getLinExpr());
-						//expr.addTerm(tfes[i][t].get(GRB.DoubleAttr.X), profs[juryList.indexOf(j)][t]);
-					}
-					System.out.println(expr.getValue());
-					model.addConstr(expr, GRB.EQUAL, 1, "cMJury"+i+","+j);
-				}
-			}*/
-			for(int i = 0 ; i < tfes.length ; i++){
-				for(Jury j : tfeList.get(i).getJuryList()){
 					GRBQuadExpr quadExpr = new GRBQuadExpr();
 					GRBLinExpr expr = new GRBLinExpr();
 					for(int t = 0 ; t < nbrSessions ; t++){
@@ -266,18 +283,19 @@ public class Scheduler {
 					}
 					model.addQConstr(quadExpr, GRB.EQUAL, expr, "cMJury"+i+","+j);
 				}
-			}
-			/*for(int i = 0 ; i < tfes.length ; i++){
-				for(int t = 0 ; t < nbrSessions ; t++){
-					GRBLinExpr expr = new GRBLinExpr();
-					for(Jury j : tfeList.get(i).getJuryList()){
-						GRBQuadExpr quadExpr = new GRBQuadExpr();
-						quadExpr.addTerm(1, tfes[i][t], profs[juryList.indexOf(j)][t]);
-						expr.add(quadExpr.getLinExpr());
-					}
-					model.addConstr(expr, GRB.EQUAL, tfeList.get(i).getJuryList().size(), "cMJury"+i+","+t);
-				}
 			}*/
+
+			for(int i = 0 ; i < tfes.length ; i++){
+				for(int t = 0 ; t < nbrSessions ; t++){
+					GRBLinExpr leftExpr = new GRBLinExpr();
+					leftExpr.addTerm(1, tfes[i][t]);
+					for(Jury j : tfeList.get(i).getJuryList()){
+						GRBLinExpr expr = new GRBLinExpr();
+						expr.addTerm(1, profs[juryList.indexOf(j)][t]);
+						model.addConstr(leftExpr, GRB.LESS_EQUAL, expr, "cMJury"+i+","+j+","+t);
+					}
+				}
+			}
 		} catch (GRBException e) {
 			System.out.println("Error code: " + e.getErrorCode() + ". " +
 					e.getMessage());

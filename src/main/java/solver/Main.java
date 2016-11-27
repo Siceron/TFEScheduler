@@ -20,7 +20,7 @@ public class Main {
 			System.out.println(s.getEmail()+" "+s.getFaculties()+" : "+s.getTfes().size());
 		}
 		Scheduler scheduler = new Scheduler(jsonParsingObject);
-		scheduler.solve(4);
+		scheduler.solve(10);
 		JSONUtil.writeJSON("assets/outputs/output.JSON", jsonParsingObject.getTfes());
 		OutputChecker report = new OutputChecker("assets/outputs/output.JSON", jsonParsingObject);
 		report.writeReport("assets/outputs/report.txt");
