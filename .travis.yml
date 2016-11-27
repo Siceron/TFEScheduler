@@ -1,6 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+before_install:
+  - mvn install:install-file -Dfile=libs/gurobi.jar -DgroupId=gurobi -DartifactId=gurobi -Dversion=6 -Dpackaging=jar
 after_success:
   - mvn clean test jacoco:report
   - bash <(curl -s https://codecov.io/bash)
