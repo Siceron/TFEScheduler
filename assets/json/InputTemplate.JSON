@@ -1,7 +1,7 @@
 {
-	"sessionNumber": 50,
+	"sessionNumber": 12,
 	"sessionDays": 3,
-	"sessionRooms": 10,
+	"sessionRooms": 1,
 	"secretaries":
 	[
 		{

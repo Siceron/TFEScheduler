@@ -10,7 +10,6 @@ import gurobi.GRBEnv;
 import gurobi.GRBException;
 import gurobi.GRBLinExpr;
 import gurobi.GRBModel;
-import gurobi.GRBQuadExpr;
 import gurobi.GRBVar;
 import objects.JSONParsingObject;
 import objects.Jury;
@@ -33,10 +32,14 @@ public class Scheduler {
 		this.jsonParsingObject = jsonParsingObject;
 	}
 
-	public void solve(int timeLimit){
+	/**
+	 * Solve the problem within the time limit
+	 * @param timeLimit : time limit in minutes
+	 * @return true if the solver found a solution
+	 */
+	public boolean solve(int timeLimit){
 		try {
-			GRBEnv    env   = new GRBEnv("scheduler.log");
-			GRBModel  model = new GRBModel(env);
+			GRBEnv env = new GRBEnv("scheduler.log");
 
 			nbrSessions = jsonParsingObject.getSessionNumber();
 			juryList = getJuryList();
@@ -47,23 +50,7 @@ public class Scheduler {
 			nbrRooms = jsonParsingObject.getSessionRooms();
 			juryTFENbr = getJuryTFENbr(juryList);
 
-
-			// Create variables
-			tfes = new GRBVar[nbrTFE][nbrSessions];
-			for(int i = 0 ; i < tfes.length ; i++){
-				for(int t = 0 ; t < tfes[0].length ; t++){
-					tfes[i][t] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "tfe"+i+","+t);
-				}
-			}
-			profs = new GRBVar[nbrJury][nbrSessions];
-			for(int i = 0 ; i < profs.length ; i++){
-				for(int t = 0 ; t < profs[0].length ; t++){
-					profs[i][t] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "prof"+i+","+t);
-				}
-			}
-
-			// Integrate new variables
-			model.update();
+			GRBModel model = initialize(env);
 
 			// Set objective: maximize 
 			// sum^nbrJury (sum^nbrSessions(profs[i][t] - juryTFENbr[i] / 3) * juryTFENbr[i])
@@ -76,18 +63,12 @@ public class Scheduler {
 				insidelinExpr.addConstant(Math.ceil(juryTFENbr.get(i)/3.0));
 				expr.multAdd(juryTFENbr.get(i), insidelinExpr);
 			}
-			/*for(int i = 0 ; i < tfes.length ; i++){
-				GRBLinExpr memExpr = new GRBLinExpr();
-				for(int t = 0 ; t < tfes[0].length ; t++){
-					memExpr.addTerm(-10, tfes[i][t]);
-				}
-				expr.add(memExpr);
-			}*/
+			
 			model.setObjective(expr, GRB.MINIMIZE);
 
 			addMoreProfsThanTFEConstraint(model);
 
-			addOneSessionPerTFEConstraint(model);
+			addTFEMustBeAssignedConstraint(model);
 
 			addMax3TFESessionConstraint(model);
 
@@ -115,23 +96,113 @@ public class Scheduler {
 				}
 			}
 
-			/*for(int i = 0 ; i < profs.length ; i++){
-				for(int t = 0 ; t < profs[0].length ; t++){
-					if(profs[i][t].get(GRB.DoubleAttr.X) == 1.0){
-						juryList.get(i).addSession(t);
-					}
-				}
-			}*/
-
 			model.write("assets/outputs/scheduler.sol");
 
 			model.dispose();
 			env.dispose();
 
+			return true;
 		} catch (GRBException e) {
-			System.out.println("Error code: " + e.getErrorCode() + ". " +
-					e.getMessage());
+			
+			// If the model is infeasible
+			try {
+				GRBEnv env = new GRBEnv("scheduler.log");
+				GRBModel model = initialize(env);
+				
+				// Set objective: maximize 
+				// sum^nbrJury (sum^nbrSessions(profs[i][t] - juryTFENbr[i] / 3) * juryTFENbr[i])
+				GRBLinExpr expr = new GRBLinExpr();
+				for(int i = 0 ; i < nbrJury ; i++){
+					GRBLinExpr insidelinExpr = new GRBLinExpr();
+					for(int t = 0 ; t < nbrSessions ; t++){
+						insidelinExpr.addTerm(1.0, profs[i][t]);
+					}
+					insidelinExpr.addConstant(Math.ceil(juryTFENbr.get(i)/3.0));
+					expr.multAdd(juryTFENbr.get(i), insidelinExpr);
+				}
+				// Add to the original objective : 
+				// sum^nbrTFE (sum^nbrSessions (-10 * tfes[i][t]))
+				for(int i = 0 ; i < tfes.length ; i++){
+					GRBLinExpr memExpr = new GRBLinExpr();
+					for(int t = 0 ; t < tfes[0].length ; t++){
+						memExpr.addTerm(-10, tfes[i][t]);
+					}
+					expr.add(memExpr);
+				}
+
+				model.setObjective(expr, GRB.MINIMIZE);
+
+				addMoreProfsThanTFEConstraint(model);
+
+				addOneSessionPerTFEConstraint(model);
+
+				addMax3TFESessionConstraint(model);
+
+				addDisponibleProfConstraint(model);
+
+				addParallelProfConstraint(model);
+
+				addProfLinkedConstraints(model);
+
+				//model.getEnv().set(GRB.IntParam.SolutionLimit, 1);
+				model.getEnv().set(GRB.DoubleParam.TimeLimit, 60*timeLimit);
+
+				// Optimize model
+				model.optimize();
+
+				System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
+
+				for(int i = 0 ; i < tfes.length ; i++){
+					String result = jsonParsingObject.getTfes().get(i)+" : ";
+					for(int t = 0 ; t < tfes[0].length ; t++){
+						if(tfes[i][t].get(GRB.DoubleAttr.X) == 1.0){
+							tfeList.get(i).setFixedSession(t);
+							result = result+t+" ";
+						}
+					}
+				}
+
+				model.write("assets/outputs/scheduler.sol");
+				
+				model.dispose();
+				env.dispose();
+				
+				return true;
+			} catch (GRBException e1) {
+				System.out.println("Error code: " + e1.getErrorCode() + ". " +
+						e1.getMessage());
+			}
 		}
+		return false;
+	}
+
+	/**
+	 * Initialize the model with the variables
+	 * @param env : the environment of the model
+	 * @return The model
+	 * @throws GRBException
+	 */
+	private GRBModel initialize(GRBEnv env) throws GRBException{
+		GRBModel model = new GRBModel(env);
+
+		// Create variables
+		tfes = new GRBVar[nbrTFE][nbrSessions];
+		for(int i = 0 ; i < tfes.length ; i++){
+			for(int t = 0 ; t < tfes[0].length ; t++){
+				tfes[i][t] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "tfe"+i+","+t);
+			}
+		}
+		profs = new GRBVar[nbrJury][nbrSessions];
+		for(int i = 0 ; i < profs.length ; i++){
+			for(int t = 0 ; t < profs[0].length ; t++){
+				profs[i][t] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "prof"+i+","+t);
+			}
+		}
+
+		// Integrate new variables
+		model.update();
+
+		return model;
 	}
 
 	/**
@@ -187,11 +258,31 @@ public class Scheduler {
 	}
 
 	/**
-	 * Add constraint : tfes[i][t] == 1
+	 * Add constraint : tfes[i][t] <= 1
 	 * One tfe i can be assigned to only one session
 	 * @param model : the GRBModel
 	 */
 	private void addOneSessionPerTFEConstraint(GRBModel model){
+		try{
+			for(int i = 0 ; i < tfes.length ; i++){
+				GRBLinExpr expr = new GRBLinExpr();
+				for(int t = 0 ; t < nbrSessions ; t++){
+					expr.addTerm(1, tfes[i][t]);
+				}
+				model.addConstr(expr, GRB.LESS_EQUAL, 1, "cM"+i);
+			}
+		} catch (GRBException e) {
+			System.out.println("Error code: " + e.getErrorCode() + ". " +
+					e.getMessage());
+		}
+	}
+
+	/**
+	 * Add constraint : tfes[i][t] == 1
+	 * One tfe i must be assigned to one session
+	 * @param model : the GRBModel
+	 */
+	private void addTFEMustBeAssignedConstraint(GRBModel model){
 		try{
 			for(int i = 0 ; i < tfes.length ; i++){
 				GRBLinExpr expr = new GRBLinExpr();
@@ -273,18 +364,6 @@ public class Scheduler {
 	 */
 	private void addProfLinkedConstraints(GRBModel model){
 		try{
-			/*for(int i = 0 ; i < tfes.length ; i++){
-				for(Jury j : tfeList.get(i).getJuryList()){
-					GRBQuadExpr quadExpr = new GRBQuadExpr();
-					GRBLinExpr expr = new GRBLinExpr();
-					for(int t = 0 ; t < nbrSessions ; t++){
-						quadExpr.addTerm(1, tfes[i][t], profs[juryList.indexOf(j)][t]);
-						expr.addTerm(1, tfes[i][t]);
-					}
-					model.addQConstr(quadExpr, GRB.EQUAL, expr, "cMJury"+i+","+j);
-				}
-			}*/
-
 			for(int i = 0 ; i < tfes.length ; i++){
 				for(int t = 0 ; t < nbrSessions ; t++){
 					GRBLinExpr leftExpr = new GRBLinExpr();

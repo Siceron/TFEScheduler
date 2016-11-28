@@ -54,7 +54,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 		}
 		Map<String, Jury> readersMap = new HashMap<String, Jury>();
 		for(Jury reader : readerList){
-			advisorsMap.put(reader.getEmail(), reader);
+			readersMap.put(reader.getEmail(), reader);
 		}
 		GsonBuilder tfeGsonBuilder = new GsonBuilder();
 		tfeGsonBuilder.registerTypeAdapter(TFE.class, new TFEJSONDeserializer(advisorsMap, readersMap));
