@@ -62,7 +62,8 @@ public class TFEJSONDeserializer implements JsonDeserializer<TFE> {
 		List<Jury> juryList = new ArrayList<Jury>();
 		List<String> emailList = JSONUtil.getStringList(field, obj);
 		for(String email : emailList){
-			juryList.add(juryMap.get(email));
+			if(juryMap.containsKey(email))
+				juryList.add(juryMap.get(email));
 		}
 		return juryList;
 	}

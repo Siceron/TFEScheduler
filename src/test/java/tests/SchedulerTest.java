@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +22,7 @@ private JSONParsingObject jsonParsingObject;
 	}
 	
 	@Test
-	public void solverTest(){
+	public void solverTest() throws IOException{
 		Scheduler scheduler = new Scheduler(jsonParsingObject);
 		assertEquals(scheduler.solve(1), true);
 	}

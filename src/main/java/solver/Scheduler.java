@@ -1,5 +1,6 @@
 package solver;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import gurobi.GRBVar;
 import objects.JSONParsingObject;
 import objects.Jury;
 import objects.TFE;
+import utils.SolverReport;
 
 public class Scheduler {
 
@@ -25,6 +27,7 @@ public class Scheduler {
 	private int nbrTFE;
 	private int nbrRooms;
 	private List<Integer> juryTFENbr;
+	private List<String> impossibleTFE;
 	private GRBVar tfes[][];
 	private GRBVar profs[][];
 
@@ -36,15 +39,15 @@ public class Scheduler {
 	 * Solve the problem within the time limit
 	 * @param timeLimit : time limit in minutes
 	 * @return true if the solver found a solution
+	 * @throws IOException 
 	 */
-	public boolean solve(int timeLimit){
+	public boolean solve(int timeLimit) throws IOException{
 		try {
 			GRBEnv env = new GRBEnv("scheduler.log");
 
 			nbrSessions = jsonParsingObject.getSessionNumber();
 			juryList = getJuryList();
-			tfeList = jsonParsingObject.getTfes();
-			preprocessing();
+			tfeList = preprocessing(jsonParsingObject.getTfes());
 			nbrJury = juryList.size();
 			nbrTFE = tfeList.size();
 			nbrRooms = jsonParsingObject.getSessionRooms();
@@ -86,15 +89,20 @@ public class Scheduler {
 
 			System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
 
+			int assigned = 0;
 			for(int i = 0 ; i < tfes.length ; i++){
 				String result = jsonParsingObject.getTfes().get(i)+" : ";
 				for(int t = 0 ; t < tfes[0].length ; t++){
 					if(tfes[i][t].get(GRB.DoubleAttr.X) == 1.0){
 						tfeList.get(i).setFixedSession(t);
-						result = result+t+" ";
+						assigned++;
+						result = result+t;
+						System.out.println(result);
 					}
 				}
 			}
+			
+			makeReport(assigned, jsonParsingObject.getTfes().size()-tfeList.size(), timeLimit);
 
 			model.write("assets/outputs/scheduler.sol");
 
@@ -152,15 +160,20 @@ public class Scheduler {
 
 				System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
 
+				int assigned = 0;
 				for(int i = 0 ; i < tfes.length ; i++){
 					String result = jsonParsingObject.getTfes().get(i)+" : ";
 					for(int t = 0 ; t < tfes[0].length ; t++){
 						if(tfes[i][t].get(GRB.DoubleAttr.X) == 1.0){
 							tfeList.get(i).setFixedSession(t);
-							result = result+t+" ";
+							result = result+t;
+							assigned++;
+							System.out.println(result);
 						}
 					}
 				}
+				
+				makeReport(assigned, jsonParsingObject.getTfes().size()-tfeList.size(), timeLimit);
 
 				model.write("assets/outputs/scheduler.sol");
 				
@@ -208,9 +221,11 @@ public class Scheduler {
 	/**
 	 * Remove all the unsolvable tfes from the solver
 	 */
-	private void preprocessing(){
+	private List<TFE> preprocessing(List<TFE> tfes){
 		List<TFE> tfesToBeRemoved = new ArrayList<TFE>();
-		for(TFE t : tfeList){
+		List<TFE> tfesResult = new ArrayList<TFE>(tfes);
+		impossibleTFE = new ArrayList<String>();
+		for(TFE t : tfesResult){
 			boolean mustRemove = true;
 			for(int d = 0 ; d < 12 ; d++){
 				boolean allSet = true;
@@ -228,9 +243,23 @@ public class Scheduler {
 			}
 		}
 		for(TFE t : tfesToBeRemoved){
-			tfeList.remove(t);
+			impossibleTFE.add(t.getCode());
+			tfesResult.remove(t);
 			System.out.println(t.getCode()+" removed");
 		}
+		return tfesResult;
+	}
+	
+	public void makeReport(int nbrTFEAssigned, int nbrTFEImpossible, int time) throws IOException{
+		SolverReport report = new SolverReport(jsonParsingObject);
+		report.setNbrTFE(jsonParsingObject.getTfes().size());
+		report.setNbrJury(nbrJury);
+		report.setNbrSessions(nbrSessions);
+		report.setNbrTFEAssigned(nbrTFEAssigned);
+		report.setNbrTFEImpossible(nbrTFEImpossible);
+		report.setTime(time);
+		report.setImpossibleTFE(impossibleTFE);
+		report.write("assets/outputs/report2.txt");
 	}
 
 	/**

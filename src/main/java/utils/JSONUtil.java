@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -37,6 +39,7 @@ public class JSONUtil {
 			JsonWriter writer = new JsonWriter(new FileWriter(path));
 			writer.setIndent("\t");
 			writer.beginArray();
+			Collections.sort(tfes, new SessionComparator());
 			for(TFE tfe : tfes){
 				writer.beginObject();
 				writer.name("code").value(tfe.getCode());
@@ -100,5 +103,14 @@ public class JSONUtil {
 	        	return stringList;
 	        }
 		}
+	}
+	
+	public static class SessionComparator implements Comparator<TFE> {
+	    @Override
+	    public int compare(TFE t1, TFE t2) {
+	    	int a = t1.getFixedSession();
+	    	int b = t2.getFixedSession();
+	        return a > b ? +1 : a < b ? -1 : 0;
+	    }
 	}
 }

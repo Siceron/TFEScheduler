@@ -1,18 +1,6 @@
 [
 	{
-		"code": "EPL1415-61",
-		"session": 5
-	},
-	{
-		"code": "EPL1415-62",
-		"session": 58
-	},
-	{
 		"code": "EPL1415-63",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-64",
 		"session": -1
 	},
 	{
@@ -20,391 +8,23 @@
 		"session": -1
 	},
 	{
-		"code": "EPL1415-65",
-		"session": 13
-	},
-	{
-		"code": "EPL1415-160",
-		"session": 45
-	},
-	{
-		"code": "EPL1415-67",
-		"session": 32
-	},
-	{
-		"code": "EPL1415-68",
-		"session": 42
-	},
-	{
-		"code": "EPL1415-7",
-		"session": 49
-	},
-	{
-		"code": "EPL1415-8",
-		"session": 30
-	},
-	{
-		"code": "EPL1415-164",
-		"session": 51
-	},
-	{
-		"code": "EPL1415-5",
-		"session": 59
-	},
-	{
-		"code": "EPL1415-163",
-		"session": 54
-	},
-	{
-		"code": "EPL1415-6",
-		"session": 43
-	},
-	{
-		"code": "EPL1415-202",
-		"session": 10
-	},
-	{
-		"code": "EPL1415-201",
-		"session": 50
-	},
-	{
-		"code": "EPL1415-168",
-		"session": 33
-	},
-	{
-		"code": "EPL1415-167",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-200",
-		"session": 30
-	},
-	{
-		"code": "EPL1415-9",
-		"session": 55
-	},
-	{
-		"code": "EPL1415-206",
-		"session": 22
-	},
-	{
-		"code": "EPL1415-205",
-		"session": 14
-	},
-	{
-		"code": "EPL1415-204",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-203",
-		"session": 25
-	},
-	{
-		"code": "EPL1415-3",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-4",
-		"session": 1
-	},
-	{
-		"code": "EPL1415-208",
-		"session": 10
-	},
-	{
-		"code": "EPL1415-1",
-		"session": 3
-	},
-	{
 		"code": "EPL1415-71",
 		"session": -1
-	},
-	{
-		"code": "EPL1415-50",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-51",
-		"session": 53
-	},
-	{
-		"code": "EPL1415-53",
-		"session": 2
-	},
-	{
-		"code": "EPL1415-55",
-		"session": 31
-	},
-	{
-		"code": "EPL1415-56",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-57",
-		"session": 38
-	},
-	{
-		"code": "EPL1415-58",
-		"session": 56
-	},
-	{
-		"code": "EPL1415-154",
-		"session": 51
-	},
-	{
-		"code": "EPL1415-152",
-		"session": 50
-	},
-	{
-		"code": "EPL1415-151",
-		"session": 34
-	},
-	{
-		"code": "EPL1415-158",
-		"session": 26
-	},
-	{
-		"code": "EPL1415-156",
-		"session": 48
-	},
-	{
-		"code": "EPL1415-155",
-		"session": 38
-	},
-	{
-		"code": "EPL1415-60",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-83",
-		"session": 37
-	},
-	{
-		"code": "EPL1415-84",
-		"session": 10
-	},
-	{
-		"code": "EPL1415-85",
-		"session": 54
-	},
-	{
-		"code": "EPL1415-86",
-		"session": 29
-	},
-	{
-		"code": "EPL1415-87",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-88",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-143",
-		"session": 46
-	},
-	{
-		"code": "EPL1415-142",
-		"session": 37
-	},
-	{
-		"code": "EPL1415-147",
-		"session": 43
-	},
-	{
-		"code": "EPL1415-144",
-		"session": 17
-	},
-	{
-		"code": "EPL1415-148",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-90",
-		"session": 57
-	},
-	{
-		"code": "EPL1415-91",
-		"session": 13
-	},
-	{
-		"code": "EPL1415-92",
-		"session": 50
-	},
-	{
-		"code": "EPL1415-93",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-72",
-		"session": 25
-	},
-	{
-		"code": "EPL1415-73",
-		"session": 42
 	},
 	{
 		"code": "EPL1415-75",
 		"session": -1
 	},
 	{
-		"code": "EPL1415-76",
-		"session": 49
-	},
-	{
-		"code": "EPL1415-78",
-		"session": 57
-	},
-	{
-		"code": "EPL1415-79",
-		"session": 37
-	},
-	{
-		"code": "EPL1415-131",
-		"session": 5
-	},
-	{
-		"code": "EPL1415-136",
-		"session": 32
-	},
-	{
-		"code": "EPL1415-138",
-		"session": 57
-	},
-	{
-		"code": "EPL1415-137",
+		"code": "EPL1415-122",
 		"session": -1
-	},
-	{
-		"code": "EPL1415-80",
-		"session": 41
-	},
-	{
-		"code": "EPL1415-81",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-82",
-		"session": 32
-	},
-	{
-		"code": "EPL1415-20",
-		"session": 31
-	},
-	{
-		"code": "EPL1415-22",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-23",
-		"session": 26
-	},
-	{
-		"code": "EPL1415-25",
-		"session": 9
-	},
-	{
-		"code": "EPL1415-26",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-120",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-27",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-28",
-		"session": 59
-	},
-	{
-		"code": "EPL1415-29",
-		"session": 41
-	},
-	{
-		"code": "EPL1415-125",
-		"session": 1
-	},
-	{
-		"code": "EPL1415-124",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-123",
-		"session": 53
-	},
-	{
-		"code": "EPL1415-128",
-		"session": 12
 	},
 	{
 		"code": "EPL1415-127",
 		"session": -1
 	},
 	{
-		"code": "EPL1415-126",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-94",
-		"session": 0
-	},
-	{
-		"code": "EPL1415-95",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-97",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-10",
-		"session": 9
-	},
-	{
-		"code": "EPL1415-194",
-		"session": 49
-	},
-	{
-		"code": "EPL1415-11",
-		"session": 16
-	},
-	{
-		"code": "EPL1415-193",
-		"session": 31
-	},
-	{
-		"code": "EPL1415-192",
-		"session": 21
-	},
-	{
 		"code": "EPL1415-191",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-198",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-14",
-		"session": 42
-	},
-	{
-		"code": "EPL1415-197",
-		"session": 17
-	},
-	{
-		"code": "EPL1415-196",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-16",
-		"session": 36
-	},
-	{
-		"code": "EPL1415-17",
 		"session": -1
 	},
 	{
@@ -412,211 +32,631 @@
 		"session": -1
 	},
 	{
-		"code": "EPL1415-18",
-		"session": 2
-	},
-	{
-		"code": "EPL1415-235",
-		"session": 0
-	},
-	{
-		"code": "EPL1415-114",
-		"session": 12
-	},
-	{
-		"code": "EPL1415-19",
+		"code": "EPL1415-43",
 		"session": -1
-	},
-	{
-		"code": "EPL1415-199",
-		"session": 13
-	},
-	{
-		"code": "EPL1415-118",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-117",
-		"session": 56
-	},
-	{
-		"code": "EPL1415-116",
-		"session": 34
-	},
-	{
-		"code": "EPL1415-115",
-		"session": 16
-	},
-	{
-		"code": "EPL1415-40",
-		"session": 46
 	},
 	{
 		"code": "EPL1415-44",
 		"session": -1
 	},
 	{
-		"code": "EPL1415-182",
-		"session": 58
-	},
-	{
-		"code": "EPL1415-45",
-		"session": 3
-	},
-	{
-		"code": "EPL1415-181",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-180",
-		"session": 41
-	},
-	{
-		"code": "EPL1415-220",
-		"session": 14
-	},
-	{
 		"code": "EPL1415-187",
 		"session": -1
-	},
-	{
-		"code": "EPL1415-47",
-		"session": 45
-	},
-	{
-		"code": "EPL1415-186",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-185",
-		"session": 7
-	},
-	{
-		"code": "EPL1415-49",
-		"session": 4
-	},
-	{
-		"code": "EPL1415-184",
-		"session": 22
-	},
-	{
-		"code": "EPL1415-102",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-223",
-		"session": 29
-	},
-	{
-		"code": "EPL1415-189",
-		"session": 38
-	},
-	{
-		"code": "EPL1415-101",
-		"session": 16
-	},
-	{
-		"code": "EPL1415-188",
-		"session": 5
-	},
-	{
-		"code": "EPL1415-221",
-		"session": 2
-	},
-	{
-		"code": "EPL1415-107",
-		"session": 26
-	},
-	{
-		"code": "EPL1415-228",
-		"session": 27
-	},
-	{
-		"code": "EPL1415-227",
-		"session": 48
-	},
-	{
-		"code": "EPL1415-106",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-226",
-		"session": 22
-	},
-	{
-		"code": "EPL1415-225",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-104",
-		"session": 33
-	},
-	{
-		"code": "EPL1415-30",
-		"session": 17
-	},
-	{
-		"code": "EPL1415-31",
-		"session": 25
 	},
 	{
 		"code": "EPL1415-172",
 		"session": -1
 	},
 	{
-		"code": "EPL1415-32",
-		"session": -1
+		"code": "EPL1415-115",
+		"session": 0
+	},
+	{
+		"code": "EPL1415-101",
+		"session": 0
+	},
+	{
+		"code": "EPL1415-50",
+		"session": 1
+	},
+	{
+		"code": "EPL1415-118",
+		"session": 1
+	},
+	{
+		"code": "EPL1415-117",
+		"session": 1
+	},
+	{
+		"code": "EPL1415-124",
+		"session": 2
+	},
+	{
+		"code": "EPL1415-94",
+		"session": 2
+	},
+	{
+		"code": "EPL1415-186",
+		"session": 2
+	},
+	{
+		"code": "EPL1415-160",
+		"session": 3
 	},
 	{
 		"code": "EPL1415-171",
-		"session": 58
-	},
-	{
-		"code": "EPL1415-33",
-		"session": 59
-	},
-	{
-		"code": "EPL1415-170",
-		"session": 54
-	},
-	{
-		"code": "EPL1415-35",
-		"session": -1
-	},
-	{
-		"code": "EPL1415-176",
-		"session": 46
-	},
-	{
-		"code": "EPL1415-37",
-		"session": -1
+		"session": 3
 	},
 	{
 		"code": "EPL1415-175",
-		"session": 45
+		"session": 3
 	},
 	{
-		"code": "EPL1415-38",
-		"session": -1
+		"code": "EPL1415-67",
+		"session": 4
 	},
 	{
-		"code": "EPL1415-173",
-		"session": 29
+		"code": "EPL1415-136",
+		"session": 4
 	},
 	{
-		"code": "EPL1415-212",
-		"session": 43
+		"code": "EPL1415-49",
+		"session": 4
 	},
 	{
-		"code": "EPL1415-211",
-		"session": -1
+		"code": "EPL1415-148",
+		"session": 5
 	},
 	{
-		"code": "EPL1415-217",
-		"session": 53
+		"code": "EPL1415-87",
+		"session": 6
+	},
+	{
+		"code": "EPL1415-95",
+		"session": 6
+	},
+	{
+		"code": "EPL1415-225",
+		"session": 6
+	},
+	{
+		"code": "EPL1415-144",
+		"session": 7
+	},
+	{
+		"code": "EPL1415-73",
+		"session": 7
+	},
+	{
+		"code": "EPL1415-14",
+		"session": 7
+	},
+	{
+		"code": "EPL1415-168",
+		"session": 8
+	},
+	{
+		"code": "EPL1415-221",
+		"session": 8
 	},
 	{
 		"code": "EPL1415-216",
+		"session": 8
+	},
+	{
+		"code": "EPL1415-203",
+		"session": 9
+	},
+	{
+		"code": "EPL1415-72",
+		"session": 9
+	},
+	{
+		"code": "EPL1415-31",
+		"session": 9
+	},
+	{
+		"code": "EPL1415-64",
+		"session": 10
+	},
+	{
+		"code": "EPL1415-93",
+		"session": 10
+	},
+	{
+		"code": "EPL1415-137",
+		"session": 10
+	},
+	{
+		"code": "EPL1415-7",
+		"session": 11
+	},
+	{
+		"code": "EPL1415-9",
+		"session": 11
+	},
+	{
+		"code": "EPL1415-228",
+		"session": 11
+	},
+	{
+		"code": "EPL1415-151",
+		"session": 13
+	},
+	{
+		"code": "EPL1415-22",
+		"session": 13
+	},
+	{
+		"code": "EPL1415-116",
+		"session": 13
+	},
+	{
+		"code": "EPL1415-204",
+		"session": 14
+	},
+	{
+		"code": "EPL1415-60",
+		"session": 14
+	},
+	{
+		"code": "EPL1415-81",
+		"session": 14
+	},
+	{
+		"code": "EPL1415-1",
+		"session": 15
+	},
+	{
+		"code": "EPL1415-97",
+		"session": 15
+	},
+	{
+		"code": "EPL1415-45",
+		"session": 15
+	},
+	{
+		"code": "EPL1415-11",
+		"session": 16
+	},
+	{
+		"code": "EPL1415-18",
+		"session": 16
+	},
+	{
+		"code": "EPL1415-111",
+		"session": 16
+	},
+	{
+		"code": "EPL1415-83",
+		"session": 17
+	},
+	{
+		"code": "EPL1415-142",
+		"session": 17
+	},
+	{
+		"code": "EPL1415-192",
+		"session": 17
+	},
+	{
+		"code": "EPL1415-25",
+		"session": 18
+	},
+	{
+		"code": "EPL1415-10",
+		"session": 18
+	},
+	{
+		"code": "EPL1415-197",
+		"session": 18
+	},
+	{
+		"code": "EPL1415-66",
+		"session": 19
+	},
+	{
+		"code": "EPL1415-232",
+		"session": 19
+	},
+	{
+		"code": "EPL1415-222",
+		"session": 19
+	},
+	{
+		"code": "EPL1415-55",
+		"session": 20
+	},
+	{
+		"code": "EPL1415-193",
+		"session": 20
+	},
+	{
+		"code": "EPL1415-180",
+		"session": 20
+	},
+	{
+		"code": "EPL1415-53",
+		"session": 21
+	},
+	{
+		"code": "EPL1415-35",
+		"session": 21
+	},
+	{
+		"code": "EPL1415-173",
+		"session": 21
+	},
+	{
+		"code": "EPL1415-164",
+		"session": 23
+	},
+	{
+		"code": "EPL1415-154",
+		"session": 23
+	},
+	{
+		"code": "EPL1415-84",
+		"session": 23
+	},
+	{
+		"code": "EPL1415-82",
+		"session": 24
+	},
+	{
+		"code": "EPL1415-28",
+		"session": 24
+	},
+	{
+		"code": "EPL1415-126",
+		"session": 24
+	},
+	{
+		"code": "EPL1415-57",
+		"session": 25
+	},
+	{
+		"code": "EPL1415-155",
+		"session": 25
+	},
+	{
+		"code": "EPL1415-189",
+		"session": 25
+	},
+	{
+		"code": "EPL1415-205",
+		"session": 26
+	},
+	{
+		"code": "EPL1415-220",
+		"session": 26
+	},
+	{
+		"code": "EPL1415-38",
+		"session": 26
+	},
+	{
+		"code": "EPL1415-6",
+		"session": 27
+	},
+	{
+		"code": "EPL1415-46",
+		"session": 27
+	},
+	{
+		"code": "EPL1415-206",
+		"session": 29
+	},
+	{
+		"code": "EPL1415-184",
+		"session": 29
+	},
+	{
+		"code": "EPL1415-226",
+		"session": 29
+	},
+	{
+		"code": "EPL1415-61",
+		"session": 30
+	},
+	{
+		"code": "EPL1415-131",
+		"session": 30
+	},
+	{
+		"code": "EPL1415-65",
+		"session": 31
+	},
+	{
+		"code": "EPL1415-91",
+		"session": 31
+	},
+	{
+		"code": "EPL1415-199",
+		"session": 31
+	},
+	{
+		"code": "EPL1415-5",
+		"session": 32
+	},
+	{
+		"code": "EPL1415-188",
+		"session": 32
+	},
+	{
+		"code": "EPL1415-33",
+		"session": 32
+	},
+	{
+		"code": "EPL1415-147",
 		"session": 33
+	},
+	{
+		"code": "EPL1415-30",
+		"session": 33
+	},
+	{
+		"code": "EPL1415-212",
+		"session": 33
+	},
+	{
+		"code": "EPL1415-8",
+		"session": 34
+	},
+	{
+		"code": "EPL1415-120",
+		"session": 34
+	},
+	{
+		"code": "EPL1415-104",
+		"session": 34
+	},
+	{
+		"code": "EPL1415-17",
+		"session": 35
+	},
+	{
+		"code": "EPL1415-106",
+		"session": 35
+	},
+	{
+		"code": "EPL1415-37",
+		"session": 35
+	},
+	{
+		"code": "EPL1415-68",
+		"session": 36
+	},
+	{
+		"code": "EPL1415-4",
+		"session": 36
+	},
+	{
+		"code": "EPL1415-125",
+		"session": 36
+	},
+	{
+		"code": "EPL1415-158",
+		"session": 37
+	},
+	{
+		"code": "EPL1415-23",
+		"session": 37
+	},
+	{
+		"code": "EPL1415-107",
+		"session": 37
+	},
+	{
+		"code": "EPL1415-167",
+		"session": 38
+	},
+	{
+		"code": "EPL1415-88",
+		"session": 38
+	},
+	{
+		"code": "EPL1415-181",
+		"session": 38
+	},
+	{
+		"code": "EPL1415-76",
+		"session": 39
+	},
+	{
+		"code": "EPL1415-194",
+		"session": 39
+	},
+	{
+		"code": "EPL1415-19",
+		"session": 39
+	},
+	{
+		"code": "EPL1415-200",
+		"session": 41
+	},
+	{
+		"code": "EPL1415-86",
+		"session": 41
+	},
+	{
+		"code": "EPL1415-223",
+		"session": 41
+	},
+	{
+		"code": "EPL1415-79",
+		"session": 42
+	},
+	{
+		"code": "EPL1415-80",
+		"session": 43
+	},
+	{
+		"code": "EPL1415-20",
+		"session": 43
+	},
+	{
+		"code": "EPL1415-113",
+		"session": 43
+	},
+	{
+		"code": "EPL1415-58",
+		"session": 44
+	},
+	{
+		"code": "EPL1415-24",
+		"session": 44
+	},
+	{
+		"code": "EPL1415-27",
+		"session": 44
+	},
+	{
+		"code": "EPL1415-48",
+		"session": 45
+	},
+	{
+		"code": "EPL1415-90",
+		"session": 46
+	},
+	{
+		"code": "EPL1415-78",
+		"session": 46
+	},
+	{
+		"code": "EPL1415-138",
+		"session": 46
+	},
+	{
+		"code": "EPL1415-51",
+		"session": 47
+	},
+	{
+		"code": "EPL1415-123",
+		"session": 47
+	},
+	{
+		"code": "EPL1415-217",
+		"session": 47
+	},
+	{
+		"code": "EPL1415-156",
+		"session": 48
+	},
+	{
+		"code": "EPL1415-29",
+		"session": 48
+	},
+	{
+		"code": "EPL1415-227",
+		"session": 48
+	},
+	{
+		"code": "EPL1415-3",
+		"session": 49
+	},
+	{
+		"code": "EPL1415-208",
+		"session": 49
+	},
+	{
+		"code": "EPL1415-211",
+		"session": 49
+	},
+	{
+		"code": "EPL1415-196",
+		"session": 50
+	},
+	{
+		"code": "EPL1415-32",
+		"session": 50
+	},
+	{
+		"code": "EPL1415-201",
+		"session": 51
+	},
+	{
+		"code": "EPL1415-152",
+		"session": 51
+	},
+	{
+		"code": "EPL1415-92",
+		"session": 51
+	},
+	{
+		"code": "EPL1415-16",
+		"session": 52
+	},
+	{
+		"code": "EPL1415-185",
+		"session": 52
+	},
+	{
+		"code": "EPL1415-198",
+		"session": 53
+	},
+	{
+		"code": "EPL1415-235",
+		"session": 53
+	},
+	{
+		"code": "EPL1415-176",
+		"session": 53
+	},
+	{
+		"code": "EPL1415-143",
+		"session": 54
+	},
+	{
+		"code": "EPL1415-40",
+		"session": 54
+	},
+	{
+		"code": "EPL1415-102",
+		"session": 54
+	},
+	{
+		"code": "EPL1415-163",
+		"session": 55
+	},
+	{
+		"code": "EPL1415-85",
+		"session": 55
+	},
+	{
+		"code": "EPL1415-170",
+		"session": 55
+	},
+	{
+		"code": "EPL1415-128",
+		"session": 56
+	},
+	{
+		"code": "EPL1415-114",
+		"session": 56
+	},
+	{
+		"code": "EPL1415-202",
+		"session": 57
+	},
+	{
+		"code": "EPL1415-56",
+		"session": 57
+	},
+	{
+		"code": "EPL1415-26",
+		"session": 57
+	},
+	{
+		"code": "EPL1415-62",
+		"session": 59
+	},
+	{
+		"code": "EPL1415-182",
+		"session": 59
+	},
+	{
+		"code": "EPL1415-47",
+		"session": 59
 	}
 ]
