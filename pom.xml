@@ -23,6 +23,7 @@
 					<excludes>
 						<exclude>**/*CSVToJSON.*</exclude>
 						<exclude>**/*Main.*</exclude>
+						<exclude>**/*Scheduler.*</exclude>
 						<exclude>**/*tests/*</exclude>
 					</excludes>
 				</configuration>

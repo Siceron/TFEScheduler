@@ -1,6 +1,6 @@
 Statistics :
 	- Solution found in : 4min
-	- Sessions allocated : 60
+	- Sessions allocated : 56
 	- Jury : 247
 	- TFE : 165
 	- TFE impossible : 12

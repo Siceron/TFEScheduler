@@ -1,15 +1,4 @@
 Conflicts :
 	 No conflicts
 Not assigned :
-	 - EPL1415-63
-	 - EPL1415-161
-	 - EPL1415-71
-	 - EPL1415-75
-	 - EPL1415-122
-	 - EPL1415-127
-	 - EPL1415-191
-	 - EPL1415-195
-	 - EPL1415-43
-	 - EPL1415-44
-	 - EPL1415-187
-	 - EPL1415-172
+	 Every TFE is assigned

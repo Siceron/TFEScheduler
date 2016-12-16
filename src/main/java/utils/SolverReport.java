@@ -49,7 +49,7 @@ public class SolverReport {
 	private void writeStats(BufferedWriter bw) throws IOException{
 		bw.write("Statistics :\n");
 		bw.write("\t- Solution found in : "+time+"min\n");
-		bw.write("\t- Sessions allocated : "+nbrSessions+"\n");
+		bw.write("\t- Sessions allocated : "+map.size()+"\n");
 		bw.write("\t- Jury : "+nbrJury+"\n");
 		bw.write("\t- TFE : "+nbrTFE+"\n");
 		bw.write("\t- TFE impossible : "+nbrTFEImpossible+"\n");
