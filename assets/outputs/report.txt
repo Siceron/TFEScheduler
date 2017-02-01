@@ -1,4 +1,0 @@
-Conflicts :
-	 No conflicts
-Not assigned :
-	 Every TFE is assigned

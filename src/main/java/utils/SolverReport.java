@@ -43,6 +43,7 @@ public class SolverReport {
 		writeConflicts(bw);
 		writeAssigned(bw);
 		writeNotDisponible(bw);
+		writeParallel(bw);
 		bw.close();
 	}
 	
@@ -60,13 +61,13 @@ public class SolverReport {
 	private void writeNotDisponible(BufferedWriter bw) throws IOException{
 		bw.write("Not disponible :\n");
 		boolean isNotDisponible = false;
-		for (Entry<Integer, List<TFE>> entry : map.entrySet()) {
+		for(Entry<Integer, List<TFE>> entry : map.entrySet()) {
 			if(entry.getKey() != -1){
 				for(TFE t : entry.getValue()){
 					for(Jury j : t.getJuryList()){
 						if(!j.getDisponibilities().get(entry.getKey()%12)){
 							isNotDisponible = true;
-							bw.write("\t-"+j.getEmail()+" for "+t.getCode()+" session "+entry.getKey()+" :\n");
+							bw.write("\t-"+j.getEmail()+" for "+t.getCode()+" session "+entry.getKey()+"\n");
 						}
 					}
 				}
@@ -74,6 +75,32 @@ public class SolverReport {
 		}
 		if(!isNotDisponible)
 			bw.write("\t Everyone can attend\n");
+	}
+	
+	private void writeParallel(BufferedWriter bw) throws IOException{
+		bw.write("Parallel sessions :\n");
+		boolean isParallel = false;
+		for(Entry<Jury, List<Integer>> entry : getJuryMap().entrySet()){
+			List<Integer> impactedSessions = getParallelSessions(entry.getValue());
+			if(!impactedSessions.isEmpty()){
+				isParallel = true;
+				bw.write("\t-"+entry.getKey().getEmail()+" for "+impactedSessions.toString()+"\n");
+			}
+		}
+		if(!isParallel)
+			bw.write("\t No parallel sessions\n");
+	}
+	
+	private List<Integer> getParallelSessions(List<Integer> sessions){
+		List<Integer> impactedSessions = new ArrayList<Integer>();
+		for(int i = 0 ; i < sessions.size() ; i++){
+			for(int j = 0 ; j < sessions.size() ; j++){
+				if(i!=j && (sessions.get(i)%12 == sessions.get(j)%12)){
+					impactedSessions.add(sessions.get(i));
+				}
+			}
+		}
+		return impactedSessions;
 	}
 	
 	private void writeConflicts(BufferedWriter bw) throws IOException{
@@ -120,6 +147,24 @@ public class SolverReport {
 				List<TFE> newList = new ArrayList<TFE>();
 				newList.add(tfe);
 				map.put(tfe.getFixedSession(), newList);
+			}
+		}
+		return map;
+	}
+	
+	private Map<Jury, List<Integer>> getJuryMap(){
+		Map<Jury, List<Integer>> map = new HashMap<Jury, List<Integer>>();
+		for(TFE tfe : jsonParsingObject.getTfes()){
+			for(Jury j : tfe.getJuryList()){
+				if(map.containsKey(j)){
+					if(!map.get(j).contains(tfe.getFixedSession()))
+						map.get(j).add(tfe.getFixedSession());
+				}
+				else{
+					List<Integer> newList = new ArrayList<Integer>();
+					newList.add(tfe.getFixedSession());
+					map.put(j, newList);
+				}
 			}
 		}
 		return map;

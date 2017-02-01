@@ -68,6 +68,10 @@ public class Scheduler {
 			}
 			
 			model.setObjective(expr, GRB.MINIMIZE);
+			
+			addBannedConstraint(model);
+			
+			addFixedConstraint(model);
 
 			addMoreProfsThanTFEConstraint(model);
 
@@ -139,6 +143,10 @@ public class Scheduler {
 				}
 
 				model.setObjective(expr, GRB.MINIMIZE);
+				
+				addBannedConstraint(model);
+				
+				addFixedConstraint(model);
 
 				addMoreProfsThanTFEConstraint(model);
 
@@ -244,8 +252,10 @@ public class Scheduler {
 		}
 		for(TFE t : tfesToBeRemoved){
 			impossibleTFE.add(t.getCode());
-			tfesResult.remove(t);
-			System.out.println(t.getCode()+" removed");
+			if(!jsonParsingObject.getFixed().contains(t)){
+				tfesResult.remove(t);
+				System.out.println(t.getCode()+" removed");
+			}
 		}
 		return tfesResult;
 	}
@@ -259,7 +269,43 @@ public class Scheduler {
 		report.setNbrTFEImpossible(nbrTFEImpossible);
 		report.setTime(time);
 		report.setImpossibleTFE(impossibleTFE);
-		report.write("assets/outputs/report2.txt");
+		report.write("assets/outputs/report.txt");
+	}
+	
+	/**
+	 * Add constraint : tfes[bannedTfe][bannedSession] == 0
+	 * Banned the session for the tfe
+	 * @param model : the GRBModel
+	 */
+	private void addBannedConstraint(GRBModel model){
+		try{
+			for(TFE t : jsonParsingObject.getBanned()){
+				GRBLinExpr expr = new GRBLinExpr();
+				expr.addTerm(1, tfes[tfeList.indexOf(t)][t.getBannedSession()]);
+				model.addConstr(expr, GRB.EQUAL, 0, "cBanned"+tfeList.indexOf(t));
+			}
+		} catch (GRBException e) {
+			System.out.println("Error code: " + e.getErrorCode() + ". " +
+					e.getMessage());
+		}
+	}
+	
+	/**
+	 * Add constraint : tfes[fixedTfe][fixedSession] == 1
+	 * Fixed the session for the tfe
+	 * @param model : the GRBModel
+	 */
+	private void addFixedConstraint(GRBModel model){
+		try{
+			for(TFE t : jsonParsingObject.getFixed()){
+				GRBLinExpr expr = new GRBLinExpr();
+				expr.addTerm(1, tfes[tfeList.indexOf(t)][t.getFixedSession()]);
+				model.addConstr(expr, GRB.EQUAL, 1, "cFixed"+tfeList.indexOf(t));
+			}
+		} catch (GRBException e) {
+			System.out.println("Error code: " + e.getErrorCode() + ". " +
+					e.getMessage());
+		}
 	}
 
 	/**
@@ -387,20 +433,22 @@ public class Scheduler {
 	}
 
 	/**
-	 * Add constraint : tfes[i][t]*profs[i][j] = tfeList.get(i).getJuryList.size()
+	 * Add constraint : tfes[i][t] <= profs[j][t]
 	 * profs linked to tfes have the same session
 	 * @param model : the GRBModel
 	 */
 	private void addProfLinkedConstraints(GRBModel model){
 		try{
 			for(int i = 0 ; i < tfes.length ; i++){
-				for(int t = 0 ; t < nbrSessions ; t++){
-					GRBLinExpr leftExpr = new GRBLinExpr();
-					leftExpr.addTerm(1, tfes[i][t]);
-					for(Jury j : tfeList.get(i).getJuryList()){
-						GRBLinExpr expr = new GRBLinExpr();
-						expr.addTerm(1, profs[juryList.indexOf(j)][t]);
-						model.addConstr(leftExpr, GRB.LESS_EQUAL, expr, "cMJury"+i+","+j+","+t);
+				if(!jsonParsingObject.getFixed().contains(tfeList.get(i))){
+					for(int t = 0 ; t < nbrSessions ; t++){
+						GRBLinExpr leftExpr = new GRBLinExpr();
+						leftExpr.addTerm(1, tfes[i][t]);
+						for(Jury j : tfeList.get(i).getJuryList()){
+							GRBLinExpr expr = new GRBLinExpr();
+							expr.addTerm(1, profs[juryList.indexOf(j)][t]);
+							model.addConstr(leftExpr, GRB.LESS_EQUAL, expr, "cMJury"+i+","+j+","+t);
+						}
 					}
 				}
 			}

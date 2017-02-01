@@ -6,7 +6,6 @@ import java.util.List;
 import objects.JSONParsingObject;
 import objects.Secretary;
 import utils.JSONUtil;
-import utils.OutputChecker;
 
 public class Main {
 
@@ -22,7 +21,5 @@ public class Main {
 		Scheduler scheduler = new Scheduler(jsonParsingObject);
 		scheduler.solve(4);
 		JSONUtil.writeJSON("assets/outputs/output.JSON", jsonParsingObject.getTfes());
-		OutputChecker report = new OutputChecker("assets/outputs/output.JSON", jsonParsingObject);
-		report.writeReport("assets/outputs/report.txt");
 	}
 }
