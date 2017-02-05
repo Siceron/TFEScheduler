@@ -108,7 +108,7 @@ public class Scheduler {
 			
 			makeReport(assigned, jsonParsingObject.getTfes().size()-tfeList.size(), timeLimit);
 
-			model.write("assets/outputs/scheduler.sol");
+			model.write("scheduler.sol");
 
 			model.dispose();
 			env.dispose();
@@ -183,7 +183,7 @@ public class Scheduler {
 				
 				makeReport(assigned, jsonParsingObject.getTfes().size()-tfeList.size(), timeLimit);
 
-				model.write("assets/outputs/scheduler.sol");
+				model.write("scheduler.sol");
 				
 				model.dispose();
 				env.dispose();
@@ -269,7 +269,7 @@ public class Scheduler {
 		report.setNbrTFEImpossible(nbrTFEImpossible);
 		report.setTime(time);
 		report.setImpossibleTFE(impossibleTFE);
-		report.write("assets/outputs/report.txt");
+		report.write("report.txt");
 	}
 	
 	/**
@@ -461,10 +461,10 @@ public class Scheduler {
 	private List<Jury> getJuryList(){
 		List<Jury> juryList = new ArrayList<Jury>();
 		Map<String, Jury> juryMap = new HashMap<String, Jury>();
-		for(Jury j : jsonParsingObject.getReaders()){
+		for(Jury j : jsonParsingObject.getAdvisors()){
 			juryMap.put(j.getEmail(), j);
 		}
-		for(Jury j : jsonParsingObject.getAdvisors()){
+		for(Jury j : jsonParsingObject.getReaders()){
 			juryMap.put(j.getEmail(), j);
 		}
 		juryList.addAll(juryMap.values());

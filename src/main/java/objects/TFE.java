@@ -72,10 +72,10 @@ public class TFE {
 	
 	public List<Jury> getJuryList(){
 		List<Jury> juryList = new ArrayList<Jury>();
-		for(Jury j : readers){
+		for(Jury j : advisors){
 			juryList.add(j);
 		}
-		for(Jury j : advisors){
+		for(Jury j : readers){
 			juryList.add(j);
 		}
 		return juryList;
