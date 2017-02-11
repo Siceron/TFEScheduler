@@ -14,7 +14,7 @@ public class WriteJSONTest {
 
 	@Test
 	public void writeJSON() throws FileNotFoundException{
-		String outputJSONPath = "assets/outputs/output.JSON";
+		String outputJSONPath = "output.JSON";
 		JSONParsingObject jsonParsingObject = JSONUtil.parseJSON("assets/json/InputTemplate.JSON");
 		JSONUtil.writeJSON(outputJSONPath, jsonParsingObject.getTfes());
 		File file = new File(outputJSONPath);
