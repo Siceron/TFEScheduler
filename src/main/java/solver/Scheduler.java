@@ -1,5 +1,6 @@
 package solver;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -260,7 +261,7 @@ public class Scheduler {
 		return tfesResult;
 	}
 	
-	public void makeReport(int nbrTFEAssigned, int nbrTFEImpossible, int time) throws IOException{
+	private void makeReport(int nbrTFEAssigned, int nbrTFEImpossible, int time) throws IOException{
 		SolverReport report = new SolverReport(jsonParsingObject);
 		report.setNbrTFE(jsonParsingObject.getTfes().size());
 		report.setNbrJury(nbrJury);
@@ -269,7 +270,11 @@ public class Scheduler {
 		report.setNbrTFEImpossible(nbrTFEImpossible);
 		report.setTime(time);
 		report.setImpossibleTFE(impossibleTFE);
-		report.write("report.txt");
+		File theDir = new File("static");
+		if (!theDir.exists()) {
+			theDir.mkdir();
+		}
+		report.write("static/report.txt");
 	}
 	
 	/**
