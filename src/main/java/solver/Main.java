@@ -26,6 +26,7 @@ public class Main {
 		for(Secretary s : secretaries){
 			System.out.println(s.getEmail()+" "+s.getFaculties()+" : "+s.getTfes().size());
 		}
+		JSONUtil.writeSecretaryJSON("secretaries.JSON", secretaries);
 		Scheduler scheduler = new Scheduler(jsonParsingObject);
 		scheduler.solve(Integer.parseInt(args[1]));
 		JSONUtil.writeJSON("output.JSON", jsonParsingObject.getTfes());

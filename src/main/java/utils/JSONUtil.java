@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonWriter;
 
 import objects.JSONParsingObject;
 import objects.Jury;
+import objects.Secretary;
 import objects.TFE;
 
 public class JSONUtil {
@@ -47,6 +48,26 @@ public class JSONUtil {
 				writer.endObject();
 			}
 			writer.endArray();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void writeSecretaryJSON(String path, List<Secretary> secretaries){
+		try {
+			JsonWriter writer = new JsonWriter(new FileWriter(path));
+			writer.setIndent("\t");
+			writer.beginObject();
+			for(Secretary secretary : secretaries){
+				writer.name(secretary.getEmail());
+				writer.beginArray();
+				for(TFE tfe : secretary.getTfes()){
+					writer.value(tfe.getCode());
+				}
+				writer.endArray();
+			}
+			writer.endObject();
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -94,7 +94,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 	
 	private List<Secretary> getSecretaries(String field, JsonObject obj){
 		GsonBuilder secretariesGsonBuilder = new GsonBuilder();
-		secretariesGsonBuilder.registerTypeAdapter(TFE.class, new SecretaryJSONDeserializer());
+		secretariesGsonBuilder.registerTypeAdapter(Secretary.class, new SecretaryJSONDeserializer());
 		Gson secretariesGson = secretariesGsonBuilder.create();
         Type secretariesType = new TypeToken<List<Secretary>>(){}.getType();
         List<Secretary> secretaries = secretariesGson.fromJson(obj.get(field), secretariesType);

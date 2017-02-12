@@ -20,4 +20,13 @@ public class WriteJSONTest {
 		File file = new File(outputJSONPath);
 		assertTrue(file.exists());
 	}
+	
+	@Test
+	public void writeSecretariesJSON() throws FileNotFoundException{
+		String outputJSONPath = "secretaries.JSON";
+		JSONParsingObject jsonParsingObject = JSONUtil.parseJSON("assets/json/InputTemplate.JSON");
+		JSONUtil.writeSecretaryJSON("secretaries.JSON", jsonParsingObject.getSecretaries());
+		File file = new File(outputJSONPath);
+		assertTrue(file.exists());
+	}
 }

@@ -58,8 +58,10 @@ public class SecretaryAssign {
 				faculty = "MAP";
 			if(secretaryMap.containsKey(faculty))
 				secretaryMap.get(faculty).add(tfe);
-			else
+			else{
+				secretaryMap.get("UNK").add(tfe);
 				System.out.println("Faculty : "+faculty+" does not exist");
+			}
 
 		}
 	}
@@ -94,19 +96,19 @@ public class SecretaryAssign {
 	private String getFaculty(TFE tfe){
 		Map<String, Integer> facultyOccurrenceMap = new HashMap<String, Integer>();
 		for(Person student : tfe.getStudents()){
-			String faculty = student.getFaculty();
+			String faculty = getFacultyPrefix(student.getFaculty());
 			if(!faculty.equals("UNK"))
 				facultyOccurrenceMap.put(faculty,
 						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
 		for(Jury advisor : tfe.getAdvisors()){
-			String faculty = advisor.getFaculty();
+			String faculty = getFacultyPrefix(advisor.getFaculty());
 			if(!faculty.equals("UNK"))
 				facultyOccurrenceMap.put(faculty,
 						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
 		for(Jury reader : tfe.getAdvisors()){
-			String faculty = reader.getFaculty();
+			String faculty = getFacultyPrefix(reader.getFaculty());
 			if(!faculty.equals("UNK"))
 				facultyOccurrenceMap.put(faculty,
 						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
@@ -115,6 +117,42 @@ public class SecretaryAssign {
 			return "UNK";
 		else
 			return keyOfMaxValue(facultyOccurrenceMap);
+	}
+	
+	/**
+	 * Get the prefix of the faculty (ex : 'MECA' for 'MECA21MS/G')
+	 * @param faculty : the faculty to get the prefix
+	 * @return the prefix of the faculty
+	 */
+	private String getFacultyPrefix(String faculty){
+		if(faculty.contains("ELEC"))
+			return "ELEC";
+		else if(faculty.contains("ELME"))
+			return "ELME";
+		else if(faculty.contains("GBIO"))
+			return "GBIO";
+		else if(faculty.contains("FYAP"))
+			return "FYAP";
+		else if(faculty.contains("KIMA"))
+			return "KIMA";
+		else if(faculty.contains("GCE"))
+			return "GCE";
+		else if(faculty.contains("INFO"))
+			return "INFO";
+		else if(faculty.contains("SINF"))
+			return "SINF";
+		else if(faculty.contains("MAP"))
+			return "MAP";
+		else if(faculty.contains("MECA"))
+			return "MECA";
+		else if(faculty.contains("INGI"))
+			return "INGI";
+		else if(faculty.contains("ELEN"))
+			return "ELEN";
+		else if(faculty.contains("INMA"))
+			return "INMA";
+		else
+			return faculty;
 	}
 
 	/**
