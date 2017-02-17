@@ -306,6 +306,30 @@ public class Scheduler {
 				GRBLinExpr expr = new GRBLinExpr();
 				expr.addTerm(1, tfes[tfeList.indexOf(t)][t.getFixedSession()]);
 				model.addConstr(expr, GRB.EQUAL, 1, "cFixed"+tfeList.indexOf(t));
+				forbidJury(t, model);
+			}
+		} catch (GRBException e) {
+			System.out.println("Error code: " + e.getErrorCode() + ". " +
+					e.getMessage());
+		}
+	}
+	
+	/**
+	 * Forbid all the parallel sessions and the session concerned
+	 * for all the jury of the tfe fixed
+	 * @param t : The tfe fixed
+	 * @param model : the GRBModel
+	 */
+	private void forbidJury(TFE t, GRBModel model){
+		try{
+			int s = t.getFixedSession();
+			int sPerDays = (nbrSessions/nbrRooms);
+			for(Jury j : t.getJuryList()){
+				for(int l = 0 ; l < nbrRooms ; l++){
+					GRBLinExpr expr = new GRBLinExpr();
+					expr.addTerm(1, profs[juryList.indexOf(j)][(s%sPerDays)+(l*sPerDays)]);
+					model.addConstr(expr, GRB.EQUAL, 0, "cForbid"+juryList.indexOf(j)+","+t.getFixedSession());
+				}
 			}
 		} catch (GRBException e) {
 			System.out.println("Error code: " + e.getErrorCode() + ". " +
