@@ -302,7 +302,7 @@ public class Scheduler {
 	 */
 	private void addFixedConstraint(GRBModel model){
 		try{
-			for(TFE t : jsonParsingObject.getFixed()){
+			for(TFE t : getFixedTfes(jsonParsingObject.getFixed())){
 				GRBLinExpr expr = new GRBLinExpr();
 				expr.addTerm(1, tfes[tfeList.indexOf(t)][t.getFixedSession()]);
 				model.addConstr(expr, GRB.EQUAL, 1, "cFixed"+tfeList.indexOf(t));
@@ -312,6 +312,22 @@ public class Scheduler {
 			System.out.println("Error code: " + e.getErrorCode() + ". " +
 					e.getMessage());
 		}
+	}
+	
+	/**
+	 * Get the list of the fixed tfes with all infos
+	 * (Must change the jsonParsingObject.getFixed() in order to
+	 * get the tfes with all infos)
+	 * @param tfes : the fixed tfes
+	 * @return fixed tfes with all infos
+	 */
+	private List<TFE> getFixedTfes(List<TFE> tfes){
+		List<TFE> result = new ArrayList<TFE>();
+		for(TFE t : tfeList){
+			if(jsonParsingObject.getFixed().contains(t))
+				result.add(t);
+		}
+		return result;
 	}
 	
 	/**
