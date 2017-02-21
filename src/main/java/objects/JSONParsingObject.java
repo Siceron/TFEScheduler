@@ -7,19 +7,19 @@ public class JSONParsingObject {
 	private int sessionNumber;
 	private int sessionDays;
 	private int sessionRooms;
-	private List<Secretary> secretaries;
+	private List<Commission> commissions;
 	private List<Jury> advisors;
 	private List<Jury> readers;
 	private List<TFE> tfes;
 	private List<TFE> fixed;
 	private List<TFE> banned;
 	
-	public JSONParsingObject(int sessionNumber, int sessionDays, int sessionRooms, List<Secretary> secretaries,
+	public JSONParsingObject(int sessionNumber, int sessionDays, int sessionRooms, List<Commission> commissions,
 			List<Jury> advisors, List<Jury> readers, List<TFE> tfes, List<TFE> fixed, List<TFE> banned) {
 		this.sessionNumber = sessionNumber;
 		this.sessionDays = sessionDays;
 		this.sessionRooms = sessionRooms;
-		this.secretaries = secretaries;
+		this.commissions = commissions;
 		this.advisors = advisors;
 		this.readers = readers;
 		this.tfes = tfes;
@@ -51,8 +51,8 @@ public class JSONParsingObject {
 		return sessionRooms;
 	}
 
-	public List<Secretary> getSecretaries() {
-		return secretaries;
+	public List<Commission> getCommissions() {
+		return commissions;
 	}
 
 	public List<Jury> getAdvisors() {

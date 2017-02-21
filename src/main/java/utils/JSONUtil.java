@@ -19,9 +19,9 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
+import objects.Commission;
 import objects.JSONParsingObject;
 import objects.Jury;
-import objects.Secretary;
 import objects.TFE;
 
 public class JSONUtil {
@@ -54,15 +54,15 @@ public class JSONUtil {
 		}
 	}
 	
-	public static void writeSecretaryJSON(String path, List<Secretary> secretaries){
+	public static void writeCommissionJSON(String path, List<Commission> commissions){
 		try {
 			JsonWriter writer = new JsonWriter(new FileWriter(path));
 			writer.setIndent("\t");
 			writer.beginObject();
-			for(Secretary secretary : secretaries){
-				writer.name(secretary.getEmail());
+			for(Commission commission : commissions){
+				writer.name(commission.getFaculty());
 				writer.beginArray();
-				for(TFE tfe : secretary.getTfes()){
+				for(TFE tfe : commission.getTfes()){
 					writer.value(tfe.getCode());
 				}
 				writer.endArray();

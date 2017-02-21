@@ -23,9 +23,9 @@ public class WriteJSONTest {
 	
 	@Test
 	public void writeSecretariesJSON() throws FileNotFoundException{
-		String outputJSONPath = "secretaries.JSON";
+		String outputJSONPath = "commissions.JSON";
 		JSONParsingObject jsonParsingObject = JSONUtil.parseJSON("assets/json/InputTemplate.JSON");
-		JSONUtil.writeSecretaryJSON("secretaries.JSON", jsonParsingObject.getSecretaries());
+		JSONUtil.writeCommissionJSON(outputJSONPath, jsonParsingObject.getCommissions());
 		File file = new File(outputJSONPath);
 		assertTrue(file.exists());
 	}

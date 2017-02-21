@@ -74,3 +74,9 @@ org.eclipse.m2e.core.prefs
 
 # Mac files
 .DS_Store
+
+*.log
+*.sol
+commissions.JSON
+output.JSON
+report.txt

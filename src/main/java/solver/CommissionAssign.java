@@ -1,52 +1,49 @@
 package solver;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 
+import objects.Commission;
 import objects.JSONParsingObject;
-import objects.Jury;
 import objects.Person;
-import objects.Secretary;
 import objects.TFE;
 
 /**
  * @author ludovic fastré
  *
- * This class assign each TFE to a secretary
+ * This class assign each TFE to a commission
  * 
  * The solver algorithm is a greedy algorithm based on the
  * faculty of the professor and the students
  */
-public class SecretaryAssign {
+public class CommissionAssign {
 
-	private Map<String, List<TFE>> secretaryMap;
+	private Map<String, List<TFE>> CommissionMap;
 
-	public SecretaryAssign(JSONParsingObject infos) {
-		this.secretaryMap = new HashMap<String, List<TFE>>();
-		fillSecretaryMap(infos);
+	public CommissionAssign(JSONParsingObject infos) {
+		this.CommissionMap = new HashMap<String, List<TFE>>();
+		fillCommissionMap(infos);
 	}
 
 	/**
-	 * Enter the informations into the secretary map
+	 * Enter the informations into the commission map
 	 * @param infos : the informations to put in the map
 	 */
-	private void fillSecretaryMap(JSONParsingObject infos){
-		secretaryMap.put("ELEC", new ArrayList<TFE>());
-		secretaryMap.put("ELME", new ArrayList<TFE>());
-		secretaryMap.put("GBIO", new ArrayList<TFE>());
-		secretaryMap.put("FYAP", new ArrayList<TFE>());
-		secretaryMap.put("KIMA", new ArrayList<TFE>());
-		secretaryMap.put("GCE", new ArrayList<TFE>());
-		secretaryMap.put("INFO", new ArrayList<TFE>());
-		secretaryMap.put("SINF", new ArrayList<TFE>());
-		secretaryMap.put("MAP", new ArrayList<TFE>());
-		secretaryMap.put("MECA", new ArrayList<TFE>());
-		secretaryMap.put("UNK", new ArrayList<TFE>());
+	private void fillCommissionMap(JSONParsingObject infos){
+		CommissionMap.put("ELEC", new ArrayList<TFE>());
+		CommissionMap.put("ELME", new ArrayList<TFE>());
+		CommissionMap.put("GBIO", new ArrayList<TFE>());
+		CommissionMap.put("FYAP", new ArrayList<TFE>());
+		CommissionMap.put("KIMA", new ArrayList<TFE>());
+		CommissionMap.put("GCE", new ArrayList<TFE>());
+		CommissionMap.put("INFO", new ArrayList<TFE>());
+		CommissionMap.put("SINF", new ArrayList<TFE>());
+		CommissionMap.put("MAP", new ArrayList<TFE>());
+		CommissionMap.put("MECA", new ArrayList<TFE>());
+		CommissionMap.put("UNK", new ArrayList<TFE>());
 		List<TFE> tfes = infos.getTfes();
 		for(TFE tfe : tfes){
 			String faculty = getFaculty(tfe).toUpperCase();
@@ -56,10 +53,10 @@ public class SecretaryAssign {
 				faculty = "ELEC";
 			else if(faculty.equals("INMA"))
 				faculty = "MAP";
-			if(secretaryMap.containsKey(faculty))
-				secretaryMap.get(faculty).add(tfe);
+			if(CommissionMap.containsKey(faculty))
+				CommissionMap.get(faculty).add(tfe);
 			else{
-				secretaryMap.get("UNK").add(tfe);
+				CommissionMap.get("UNK").add(tfe);
 				System.out.println("Faculty : "+faculty+" does not exist");
 			}
 
@@ -71,21 +68,19 @@ public class SecretaryAssign {
 	 * @return A Map key<String>:faculty, value<List<TFE>>:tfes
 	 */
 	public Map<String, List<TFE>> solve(){
-		return secretaryMap;
+		return CommissionMap;
 	}
 
 	/**
-	 * Assign the tfes for all the secretaries
-	 * @param secretaries : The list of secretaries
+	 * Assign the tfes for all the commissions
+	 * @param commissions : The list of commissions
 	 */
-	public void solve(List<Secretary> secretaries){
-		for(Secretary secretary : secretaries){
-			for(String faculty : secretary.getFaculties()){
-				if(secretaryMap.containsKey(faculty))
-					secretary.addTfeList(secretaryMap.get(faculty));
-				else
-					System.out.println("Faculty : "+faculty+" does not exist");
-			}
+	public void solve(List<Commission> commissions){
+		for(Commission commission : commissions){
+			if(CommissionMap.containsKey(commission.getFaculty()))
+				commission.addTfeList(CommissionMap.get(commission.getFaculty()));
+			else
+				System.out.println("Faculty : "+commission.getFaculty()+" does not exist");
 		}
 	}
 
@@ -101,22 +96,7 @@ public class SecretaryAssign {
 				facultyOccurrenceMap.put(faculty,
 						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
 		}
-		for(Jury advisor : tfe.getAdvisors()){
-			String faculty = getFacultyPrefix(advisor.getFaculty());
-			if(!faculty.equals("UNK"))
-				facultyOccurrenceMap.put(faculty,
-						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
-		}
-		for(Jury reader : tfe.getAdvisors()){
-			String faculty = getFacultyPrefix(reader.getFaculty());
-			if(!faculty.equals("UNK"))
-				facultyOccurrenceMap.put(faculty,
-						facultyOccurrenceMap.getOrDefault(faculty, 0)+1);
-		}
-		if(facultyOccurrenceMap.isEmpty())
-			return "UNK";
-		else
-			return keyOfMaxValue(facultyOccurrenceMap);
+		return keyOfMaxValue(facultyOccurrenceMap);
 	}
 	
 	/**
@@ -161,12 +141,17 @@ public class SecretaryAssign {
 	 * @return A String representing the key with the largest value
 	 */
 	private String keyOfMaxValue(Map<String, Integer> map) {
-		Comparator<? super Entry<String, Integer>> maxValueComparator = (entry1, entry2) ->
-		entry1.getValue().compareTo(entry2.getValue());
-
-		Optional<Entry<String, Integer>> maxValue = map.entrySet()
-				.stream().max(maxValueComparator);
-
-		return maxValue.get().getKey();
+		int max = 0;
+		String result = "UNK";
+		for(Entry<String, Integer> e : map.entrySet()){
+			if(e.getValue() > max){
+				max = e.getValue();
+				result = e.getKey();
+			}
+			else if(e.getValue() == max){
+				result = "UNK";
+			}
+		}
+		return result;
 	}
 }

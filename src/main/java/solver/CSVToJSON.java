@@ -15,10 +15,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 
+import objects.Commission;
 import objects.JSONParsingObject;
 import objects.Jury;
 import objects.Person;
-import objects.Secretary;
 import objects.TFE;
 import utils.InputJSONDeserializer;
 
@@ -36,7 +36,7 @@ public class CSVToJSON {
 			disponibilities = disponibilities(args[1]);
 			advisorsFaculty = advisors(args[2]);
 			List<TFE> tfes = tfes(args[0]);
-			JSONParsingObject object = new JSONParsingObject(60, 3, 5, secretaries(), new ArrayList<Jury>(advisorsMap.values()),
+			JSONParsingObject object = new JSONParsingObject(60, 3, 5, getCommissions(), new ArrayList<Jury>(advisorsMap.values()),
 					new ArrayList<Jury>(readersMap.values()), tfes, new ArrayList<TFE>(), new ArrayList<TFE>());
 			try {
 				GsonBuilder gsonBuilder = new GsonBuilder();
@@ -53,35 +53,21 @@ public class CSVToJSON {
 			System.out.println("Please specify the path to the csv file.");
 		}
 	}
-
-	private static List<Secretary> secretaries(){
-		List<Secretary> secretaries = new ArrayList<Secretary>();
-		List<String> faculties = new ArrayList<String>();
-		faculties.add("ELEC");
-		faculties.add("ELME");
-		faculties.add("GBIO");
-		secretaries.add(new Secretary("secretary1@uclouvain.be", faculties));
-		faculties = new ArrayList<String>();
-		faculties.add("FYAP");
-		faculties.add("KIMA");
-		secretaries.add(new Secretary("secretary2@uclouvain.be", faculties));
-		faculties = new ArrayList<String>();
-		faculties.add("GCE");
-		secretaries.add(new Secretary("secretary3@uclouvain.be", faculties));
-		faculties = new ArrayList<String>();
-		faculties.add("INFO");
-		faculties.add("SINF");
-		secretaries.add(new Secretary("secretary4@uclouvain.be", faculties));
-		faculties = new ArrayList<String>();
-		faculties.add("MAP");
-		secretaries.add(new Secretary("secretary5@uclouvain.be", faculties));
-		faculties = new ArrayList<String>();
-		faculties.add("MECA");
-		secretaries.add(new Secretary("secretary6@uclouvain.be", faculties));
-		faculties = new ArrayList<String>();
-		faculties.add("UNK");
-		secretaries.add(new Secretary("secretary-poubelle@uclouvain.be", faculties));
-		return secretaries;
+	
+	private static List<Commission> getCommissions(){
+		List<Commission> commissions = new ArrayList<Commission>();
+		commissions.add(new Commission("ELEC"));
+		commissions.add(new Commission("ELME"));
+		commissions.add(new Commission("GBIO"));
+		commissions.add(new Commission("FYAP"));
+		commissions.add(new Commission("KIMA"));
+		commissions.add(new Commission("GCE"));
+		commissions.add(new Commission("INFO"));
+		commissions.add(new Commission("SINF"));
+		commissions.add(new Commission("MAP"));
+		commissions.add(new Commission("MECA"));
+		commissions.add(new Commission("UNK"));
+		return commissions;
 	}
 	
 	private static Map<String, String> advisors(String path){

@@ -16,9 +16,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import objects.Commission;
 import objects.JSONParsingObject;
 import objects.Jury;
-import objects.Secretary;
 import objects.TFE;
 
 public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject> {
@@ -32,7 +32,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 		int sessionDays = JSONUtil.getInt("sessionDays", obj);
 		int sessionRooms = JSONUtil.getInt("sessionRooms", obj);
 		
-		List<Secretary> secretaries = getSecretaries("secretaries", obj);
+		List<Commission> commissions = getCommissions();
 		List<Jury> advisorList = getJuryList("advisors", obj);
 		List<Jury> readerList = getJuryList("readers", obj);
 		
@@ -42,7 +42,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
         tfeList = updateTFEList(tfeList, fixedList);
         
         JSONParsingObject jsonParsingObject = new JSONParsingObject(sessionNumber, sessionDays, sessionRooms, 
-        		secretaries, advisorList, readerList, tfeList, fixedList, bannedList);
+        		commissions, advisorList, readerList, tfeList, fixedList, bannedList);
 		
 		return jsonParsingObject;
 	}
@@ -92,16 +92,20 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 		return new ArrayList<TFE>(map.values());
 	}
 	
-	private List<Secretary> getSecretaries(String field, JsonObject obj){
-		GsonBuilder secretariesGsonBuilder = new GsonBuilder();
-		secretariesGsonBuilder.registerTypeAdapter(Secretary.class, new SecretaryJSONDeserializer());
-		Gson secretariesGson = secretariesGsonBuilder.create();
-        Type secretariesType = new TypeToken<List<Secretary>>(){}.getType();
-        List<Secretary> secretaries = secretariesGson.fromJson(obj.get(field), secretariesType);
-        if (secretaries == null)
-        	throw new JsonSyntaxException("Missing field in JSON: "+field);
-        else
-        	return secretaries;
+	private List<Commission> getCommissions(){
+		List<Commission> commissions = new ArrayList<Commission>();
+		commissions.add(new Commission("ELEC"));
+		commissions.add(new Commission("ELME"));
+		commissions.add(new Commission("GBIO"));
+		commissions.add(new Commission("FYAP"));
+		commissions.add(new Commission("KIMA"));
+		commissions.add(new Commission("GCE"));
+		commissions.add(new Commission("INFO"));
+		commissions.add(new Commission("SINF"));
+		commissions.add(new Commission("MAP"));
+		commissions.add(new Commission("MECA"));
+		commissions.add(new Commission("UNK"));
+		return commissions;
 	}
 	
 	private List<Jury> getJuryList(String field, JsonObject obj){

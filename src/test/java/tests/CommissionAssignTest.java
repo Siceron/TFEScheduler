@@ -9,13 +9,13 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import objects.Commission;
 import objects.JSONParsingObject;
-import objects.Secretary;
 import objects.TFE;
-import solver.SecretaryAssign;
+import solver.CommissionAssign;
 import utils.JSONUtil;
 
-public class SecretaryAssignTest {
+public class CommissionAssignTest {
 
 	private JSONParsingObject jsonParsingObject;
 	
@@ -25,20 +25,20 @@ public class SecretaryAssignTest {
 	}
 	
 	@Test
-	public void withSecretaries(){
-		SecretaryAssign solver = new SecretaryAssign(jsonParsingObject);
-		List<Secretary> secretaries = jsonParsingObject.getSecretaries();
-		solver.solve(secretaries);
-		List<TFE> tfes = secretaries.get(2).getTfes();
+	public void withCommissions(){
+		CommissionAssign solver = new CommissionAssign(jsonParsingObject);
+		List<Commission> commissions = jsonParsingObject.getCommissions();
+		solver.solve(commissions);
+		List<TFE> tfes = commissions.get(7).getTfes();
 		assertEquals(tfes.get(0).getCode(), "EPL1617-999");
 		assertEquals(tfes.get(1).getCode(), "EPL1617-111");
 	}
 	
 	@Test
 	public void withoutSecretaries(){
-		SecretaryAssign solver = new SecretaryAssign(jsonParsingObject);
+		CommissionAssign solver = new CommissionAssign(jsonParsingObject);
 		Map<String, List<TFE>> map = solver.solve();
-		List<TFE> tfes = map.get("INFO");
+		List<TFE> tfes = map.get("SINF");
 		assertEquals(tfes.get(0).getCode(), "EPL1617-999");
 		assertEquals(tfes.get(1).getCode(), "EPL1617-111");
 	}
