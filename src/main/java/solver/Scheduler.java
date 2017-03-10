@@ -46,12 +46,12 @@ public class Scheduler {
 		try {
 			GRBEnv env = new GRBEnv("scheduler.log");
 
-			nbrSessions = jsonParsingObject.getSessionNumber();
+			nbrRooms = jsonParsingObject.getSessionRooms();
+			nbrSessions = nbrRooms*4*jsonParsingObject.getSessionDays();
 			juryList = getJuryList();
 			tfeList = preprocessing(jsonParsingObject.getTfes());
 			nbrJury = juryList.size();
 			nbrTFE = tfeList.size();
-			nbrRooms = jsonParsingObject.getSessionRooms();
 			juryTFENbr = getJuryTFENbr(juryList);
 
 			GRBModel model = initialize(env);
@@ -66,6 +66,17 @@ public class Scheduler {
 				}
 				insidelinExpr.addConstant(Math.ceil(juryTFENbr.get(i)/3.0));
 				expr.multAdd(juryTFENbr.get(i), insidelinExpr);
+			}
+			// Add to the original objective : 
+			// sum^nbrTFE (sum^nbrSessions (5 * tfes[i][t] if reserve))
+			for(int i = 0 ; i < tfes.length ; i++){
+				GRBLinExpr memExpr = new GRBLinExpr();
+				for(int t = 0 ; t < tfes[0].length ; t++){
+					if(isReserve(t, jsonParsingObject.getReserveDay())){
+						memExpr.addTerm(5, tfes[i][t]);
+					}
+				}
+				expr.add(memExpr);
 			}
 			
 			model.setObjective(expr, GRB.MINIMIZE);
@@ -139,6 +150,17 @@ public class Scheduler {
 					GRBLinExpr memExpr = new GRBLinExpr();
 					for(int t = 0 ; t < tfes[0].length ; t++){
 						memExpr.addTerm(-10, tfes[i][t]);
+					}
+					expr.add(memExpr);
+				}
+				// Add to the original objective : 
+				// sum^nbrTFE (sum^nbrSessions (5 * tfes[i][t] if reserve))
+				for(int i = 0 ; i < tfes.length ; i++){
+					GRBLinExpr memExpr = new GRBLinExpr();
+					for(int t = 0 ; t < tfes[0].length ; t++){
+						if(isReserve(t, jsonParsingObject.getReserveDay())){
+							memExpr.addTerm(5, tfes[i][t]);
+						}
 					}
 					expr.add(memExpr);
 				}
@@ -503,6 +525,10 @@ public class Scheduler {
 		}
 	}
 
+	private boolean isReserve(int session, int day){
+		return session%12 >= 4*day && session%12 <= (4*(day+1))-1;
+	}
+	
 	private List<Jury> getJuryList(){
 		List<Jury> juryList = new ArrayList<Jury>();
 		Map<String, Jury> juryMap = new HashMap<String, Jury>();

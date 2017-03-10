@@ -28,7 +28,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 		
 		JsonObject obj = jsonElement.getAsJsonObject();
 		
-		int sessionNumber = JSONUtil.getInt("sessionNumber", obj);
+		int reserveDay = JSONUtil.getInt("reserveDay", obj);
 		int sessionDays = JSONUtil.getInt("sessionDays", obj);
 		int sessionRooms = JSONUtil.getInt("sessionRooms", obj);
 		
@@ -41,7 +41,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
         List<TFE> bannedList = getSessionTFEList("banned", obj, false);
         tfeList = updateTFEList(tfeList, fixedList);
         
-        JSONParsingObject jsonParsingObject = new JSONParsingObject(sessionNumber, sessionDays, sessionRooms, 
+        JSONParsingObject jsonParsingObject = new JSONParsingObject(reserveDay, sessionDays, sessionRooms, 
         		commissions, advisorList, readerList, tfeList, fixedList, bannedList);
 		
 		return jsonParsingObject;

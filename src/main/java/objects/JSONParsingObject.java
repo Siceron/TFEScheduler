@@ -4,7 +4,7 @@ import java.util.List;
 
 public class JSONParsingObject {
 	
-	private int sessionNumber;
+	private int reserveDay;
 	private int sessionDays;
 	private int sessionRooms;
 	private List<Commission> commissions;
@@ -14,9 +14,9 @@ public class JSONParsingObject {
 	private List<TFE> fixed;
 	private List<TFE> banned;
 	
-	public JSONParsingObject(int sessionNumber, int sessionDays, int sessionRooms, List<Commission> commissions,
+	public JSONParsingObject(int reserveDay, int sessionDays, int sessionRooms, List<Commission> commissions,
 			List<Jury> advisors, List<Jury> readers, List<TFE> tfes, List<TFE> fixed, List<TFE> banned) {
-		this.sessionNumber = sessionNumber;
+		this.reserveDay = reserveDay;
 		this.sessionDays = sessionDays;
 		this.sessionRooms = sessionRooms;
 		this.commissions = commissions;
@@ -39,8 +39,8 @@ public class JSONParsingObject {
 		return banned;
 	}
 
-	public int getSessionNumber() {
-		return sessionNumber;
+	public int getReserveDay() {
+		return reserveDay;
 	}
 
 	public int getSessionDays() {
