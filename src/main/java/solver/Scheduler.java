@@ -31,6 +31,7 @@ public class Scheduler {
 	private List<String> impossibleTFE;
 	private GRBVar tfes[][];
 	private GRBVar profs[][];
+	private GRBVar sessions[];
 
 	public Scheduler(JSONParsingObject jsonParsingObject){
 		this.jsonParsingObject = jsonParsingObject;
@@ -78,6 +79,13 @@ public class Scheduler {
 				}
 				expr.add(memExpr);
 			}
+			// Add to the original objective : 
+			// sum^nbrSessions (4 * sessions[i])
+			for(int t = 0 ; t < nbrSessions ; t++){
+				GRBLinExpr memExpr = new GRBLinExpr();
+				memExpr.addTerm(4, sessions[t]);
+				expr.add(memExpr);
+			}
 			
 			model.setObjective(expr, GRB.MINIMIZE);
 			
@@ -96,6 +104,8 @@ public class Scheduler {
 			addParallelProfConstraint(model);
 
 			addProfLinkedConstraints(model);
+			
+			addSetSessionConstraint(model);
 
 			//model.getEnv().set(GRB.IntParam.SolutionLimit, 1);
 			model.getEnv().set(GRB.DoubleParam.TimeLimit, 60*timeLimit);
@@ -164,6 +174,13 @@ public class Scheduler {
 					}
 					expr.add(memExpr);
 				}
+				// Add to the original objective : 
+				// sum^nbrSessions (4 * sessions[i])
+				for(int t = 0 ; t < nbrSessions ; t++){
+					GRBLinExpr memExpr = new GRBLinExpr();
+					memExpr.addTerm(4, sessions[t]);
+					expr.add(memExpr);
+				}
 
 				model.setObjective(expr, GRB.MINIMIZE);
 				
@@ -182,6 +199,8 @@ public class Scheduler {
 				addParallelProfConstraint(model);
 
 				addProfLinkedConstraints(model);
+				
+				addSetSessionConstraint(model);
 
 				//model.getEnv().set(GRB.IntParam.SolutionLimit, 1);
 				model.getEnv().set(GRB.DoubleParam.TimeLimit, 60*timeLimit);
@@ -241,6 +260,11 @@ public class Scheduler {
 			for(int t = 0 ; t < profs[0].length ; t++){
 				profs[i][t] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "prof"+i+","+t);
 			}
+		}
+		
+		sessions = new GRBVar[nbrSessions];
+		for(int i = 0 ; i < nbrSessions ; i++){
+			sessions[i] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "session"+i);
 		}
 
 		// Integrate new variables
@@ -517,6 +541,28 @@ public class Scheduler {
 							model.addConstr(leftExpr, GRB.LESS_EQUAL, expr, "cMJury"+i+","+j+","+t);
 						}
 					}
+				}
+			}
+		} catch (GRBException e) {
+			System.out.println("Error code: " + e.getErrorCode() + ". " +
+					e.getMessage());
+		}
+	}
+	
+	/**
+	 * Add contraint : session[t] >= tfe[i][t]
+	 * If the tfe is set to session t then session t is set
+	 * @param model : the GRBModel
+	 */
+	private void addSetSessionConstraint(GRBModel model){
+		try{
+			for(int i = 0 ; i < tfes.length ; i++){
+				for(int t = 0 ; t < nbrSessions ; t++){
+					GRBLinExpr leftExpr = new GRBLinExpr();
+					leftExpr.addTerm(1, sessions[t]);
+					GRBLinExpr expr = new GRBLinExpr();
+					expr.addTerm(1, tfes[i][t]);
+					model.addConstr(leftExpr, GRB.GREATER_EQUAL, expr, "cSessionTFE"+t+","+i);
 				}
 			}
 		} catch (GRBException e) {
