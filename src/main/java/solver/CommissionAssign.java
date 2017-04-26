@@ -38,6 +38,7 @@ public class CommissionAssign {
 		CommissionMap.put("GBIO", new ArrayList<TFE>());
 		CommissionMap.put("FYAP", new ArrayList<TFE>());
 		CommissionMap.put("KIMA", new ArrayList<TFE>());
+		CommissionMap.put("NANO", new ArrayList<TFE>());
 		CommissionMap.put("GCE", new ArrayList<TFE>());
 		CommissionMap.put("INFO", new ArrayList<TFE>());
 		CommissionMap.put("SINF", new ArrayList<TFE>());
@@ -47,6 +48,8 @@ public class CommissionAssign {
 		List<TFE> tfes = infos.getTfes();
 		for(TFE tfe : tfes){
 			String faculty = getFaculty(tfe).toUpperCase();
+			if(faculty.equals("NANO"))
+				System.out.println("NANO");
 			if(faculty.equals("INGI"))
 				faculty = "INFO";
 			else if(faculty.equals("ELEN"))
@@ -115,6 +118,8 @@ public class CommissionAssign {
 			return "FYAP";
 		else if(faculty.contains("KIMA"))
 			return "KIMA";
+		else if(faculty.contains("NANO"))
+			return "NANO";
 		else if(faculty.contains("GCE"))
 			return "GCE";
 		else if(faculty.contains("INFO"))

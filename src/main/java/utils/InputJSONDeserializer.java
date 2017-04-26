@@ -99,6 +99,7 @@ public class InputJSONDeserializer implements JsonDeserializer<JSONParsingObject
 		commissions.add(new Commission("GBIO"));
 		commissions.add(new Commission("FYAP"));
 		commissions.add(new Commission("KIMA"));
+		commissions.add(new Commission("NANO"));
 		commissions.add(new Commission("GCE"));
 		commissions.add(new Commission("INFO"));
 		commissions.add(new Commission("SINF"));

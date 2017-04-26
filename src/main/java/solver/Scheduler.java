@@ -109,6 +109,8 @@ public class Scheduler {
 
 			//model.getEnv().set(GRB.IntParam.SolutionLimit, 1);
 			model.getEnv().set(GRB.DoubleParam.TimeLimit, 60*timeLimit);
+			//model.getEnv().set(GRB.IntParam.MIPFocus, 3);
+			//model.getEnv().set(GRB.IntParam.Cuts, 0);
 
 			// Optimize model
 			model.optimize();
