@@ -32,4 +32,12 @@ public class Jury extends Person {
 	public List<Integer> getSessions(){
 		return sessions;
 	}
+	
+	public int getNumberSessionDisp(){
+		int count = 0;
+		for(boolean b : disponibilities){
+			if(b) count++;
+		}
+		return count;
+	}
 }

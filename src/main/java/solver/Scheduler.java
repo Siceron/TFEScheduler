@@ -51,6 +51,7 @@ public class Scheduler {
 			nbrSessions = nbrRooms*4*jsonParsingObject.getSessionDays();
 			juryList = getJuryList();
 			tfeList = preprocessing(jsonParsingObject.getTfes());
+			tfeList = preprocessingJury(tfeList);
 			nbrJury = juryList.size();
 			nbrTFE = tfeList.size();
 			juryTFENbr = getJuryTFENbr(juryList);
@@ -140,6 +141,8 @@ public class Scheduler {
 			return true;
 		} catch (GRBException e) {
 			
+			System.out.println("!!! model infeasible !!!");
+			
 			// If the model is infeasible
 			try {
 				GRBEnv env = new GRBEnv("scheduler.log");
@@ -161,7 +164,7 @@ public class Scheduler {
 				for(int i = 0 ; i < tfes.length ; i++){
 					GRBLinExpr memExpr = new GRBLinExpr();
 					for(int t = 0 ; t < tfes[0].length ; t++){
-						memExpr.addTerm(-10, tfes[i][t]);
+						memExpr.addTerm(-20, tfes[i][t]);
 					}
 					expr.add(memExpr);
 				}
@@ -273,6 +276,36 @@ public class Scheduler {
 		model.update();
 
 		return model;
+	}
+	
+	/**
+	 * Remove tfes with too constrained juries
+	 * ex: if one jury is available for only one session and
+	 * 		he has 4 or more tfes to attend.
+	 */
+	private List<TFE> preprocessingJury(List<TFE> tfes){
+		List<TFE> tfesToBeRemoved = new ArrayList<TFE>();
+		List<TFE> tfesResult = new ArrayList<TFE>(tfes);
+		
+		Map<String, Integer> juryTfeNbrMap = getJuryTFENbrMap(juryList);
+		
+		for(TFE t : tfesResult){
+			for(Jury j : t.getJuryList()){
+				if(juryTfeNbrMap.get(j.getEmail()) > j.getNumberSessionDisp()*3){
+					tfesToBeRemoved.add(t);
+					break;
+				}
+			}
+		}
+		
+		for(TFE t : tfesToBeRemoved){
+			impossibleTFE.add(t.getCode());
+			if(!jsonParsingObject.getFixed().contains(t)){
+				tfesResult.remove(t);
+				System.out.println(t.getCode()+" removed");
+			}
+		}
+		return tfesResult;
 	}
 
 	/**
@@ -601,5 +634,18 @@ public class Scheduler {
 			tfeNbr.add(count);
 		}
 		return tfeNbr;
+	}
+	
+	private Map<String, Integer> getJuryTFENbrMap(List<Jury> juryList){
+		Map<String, Integer> tfeNbrMap = new HashMap<String, Integer>();
+		for(Jury j : juryList){
+			int count = 0;
+			for(TFE t : jsonParsingObject.getTfes()){
+				if(t.containsJury(j))
+					count++;
+			}
+			tfeNbrMap.put(j.getEmail(), count);
+		}
+		return tfeNbrMap;
 	}
 }
