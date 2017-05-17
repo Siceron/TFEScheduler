@@ -29,7 +29,7 @@ public class CommissionAssignTest {
 		CommissionAssign solver = new CommissionAssign(jsonParsingObject);
 		List<Commission> commissions = jsonParsingObject.getCommissions();
 		solver.solve(commissions);
-		List<TFE> tfes = commissions.get(7).getTfes();
+		List<TFE> tfes = commissions.get(8).getTfes();
 		assertEquals(tfes.get(0).getCode(), "EPL1617-999");
 		assertEquals(tfes.get(1).getCode(), "EPL1617-111");
 	}

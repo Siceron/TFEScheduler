@@ -1,33 +1,6 @@
 {
-	"sessionNumber": 50,
+	"reserveDay": 2,
 	"sessionDays": 3,
-	"secretaries":
-	[
-		{
-			"email": "secretary1@uclouvain.be",
-			"faculties":["ELEC", "ELME", "GBIO"]
-		},
-		{
-			"email": "secretary2@uclouvain.be",
-			"faculties":["FYAP", "KIMA"]
-		},
-		{
-			"email": "secretary3@uclouvain.be",
-			"faculties":["SINF", "INFO"]
-		},
-		{
-			"email": "secretary4@uclouvain.be",
-			"faculties":["GCE"]
-		},
-		{
-			"email": "secretary5@uclouvain.be",
-			"faculties":["MECA"]
-		},
-		{
-			"email": "secretary6@uclouvain.be",
-			"faculties":["MAP"]
-		}
-	],
 	"advisors":
 	[
 		{
