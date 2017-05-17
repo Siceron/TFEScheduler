@@ -24,6 +24,8 @@
 						<exclude>**/*CSVToJSON.*</exclude>
 						<exclude>**/*Main.*</exclude>
 						<exclude>**/*Scheduler.*</exclude>
+						<exclude>**/*SolverReport.*</exclude>
+						<exclude>**/*objects/*</exclude>
 						<exclude>**/*tests/*</exclude>
 					</excludes>
 				</configuration>
