@@ -48,8 +48,6 @@ public class CommissionAssign {
 		List<TFE> tfes = infos.getTfes();
 		for(TFE tfe : tfes){
 			String faculty = getFaculty(tfe).toUpperCase();
-			if(faculty.equals("NANO"))
-				System.out.println("NANO");
 			if(faculty.equals("INGI"))
 				faculty = "INFO";
 			else if(faculty.equals("ELEN"))

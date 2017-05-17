@@ -1,0 +1,225 @@
+{
+	"reserveDay": 2,
+	"sessionDays": 3,
+	"sessionRooms": 1,
+	"advisors":
+	[
+		{
+			"email": "advisor1@uclouvain.be",
+			"faculty": "INGI",
+			"disponibilities": [false, true, false, true, true, false, true, false, true, false, true, false]
+		},
+		{
+			"email": "advisor2@uclouvain.be",
+			"faculty": "INGI",
+			"disponibilities": [true, false, false, true, true, false, false, true, true, false, true, false]
+		}
+	],
+	"readers":
+	[
+		{
+			"email": "reader1@uclouvain.be",
+			"faculty": "INGI",
+			"disponibilities": [false, false, false, true, false, true, true, false, true, false, true, true]
+		},
+		{
+			"email": "reader2@uclouvain.be",
+			"faculty": "INMA",
+			"disponibilities": [false, true, true, true, true, false, true, false, false, false, true, true]
+		}
+	],
+	"tfes": [
+		{
+			"code": "EPL1617-999",
+			"students":
+			[
+				{
+					"email": "student1@student.uclouvain.be",
+					"faculty": "SINF"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		},
+		{
+			"code": "EPL1617-111",
+			"students":
+			[
+				{
+					"email": "student2@student.uclouvain.be",
+					"faculty": "SINF"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		},
+		{
+			"code": "EPL1617-222",
+			"students":
+			[
+				{
+					"email": "student3@student.uclouvain.be",
+					"faculty": "INGI"
+				},
+				{
+					"email": "student12@student.uclouvain.be",
+					"faculty": "MECA"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		},
+		{
+			"code": "EPL1617-333",
+			"students":
+			[
+				{
+					"email": "student3@student.uclouvain.be",
+					"faculty": "ELEN"
+				},
+				{
+					"email": "student11@student.uclouvain.be",
+					"faculty": "MAP"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		},
+		{
+			"code": "EPL1617-444",
+			"students":
+			[
+				{
+					"email": "student4@student.uclouvain.be",
+					"faculty": "INMA"
+				},
+				{
+					"email": "student10@student.uclouvain.be",
+					"faculty": "GCE"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		},
+		{
+			"code": "EPL1617-555",
+			"students":
+			[
+				{
+					"email": "student5@student.uclouvain.be",
+					"faculty": "TEST"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		},
+		{
+			"code": "EPL1617-666",
+			"students":
+			[
+				{
+					"email": "student6@student.uclouvain.be",
+					"faculty": "ELME"
+				},
+				{
+					"email": "student7@student.uclouvain.be",
+					"faculty": "GBIO"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		},
+		{
+			"code": "EPL1617-777",
+			"students":
+			[
+				{
+					"email": "student8@student.uclouvain.be",
+					"faculty": "FYAP"
+				},
+				{
+					"email": "student9@student.uclouvain.be",
+					"faculty": "KIMA"
+				}
+			],
+			"advisors": 
+			[
+				"advisor1@uclouvain.be",
+				"advisor2@uclouvain.be"
+			],
+			"readers":
+			[
+				"reader1@uclouvain.be",
+				"reader2@uclouvain.be"
+			]
+		}
+	],
+	"fixed":
+	[
+		{
+			"code": "EPL1617-999",
+			"session": 12
+		},
+		{
+			"code": "EPL1617-111",
+			"session": 12
+		}
+	],
+	"banned": []
+}

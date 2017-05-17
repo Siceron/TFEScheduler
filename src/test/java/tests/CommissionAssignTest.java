@@ -21,7 +21,7 @@ public class CommissionAssignTest {
 	
 	@Before
 	public void setUp() throws FileNotFoundException {
-		jsonParsingObject = JSONUtil.parseJSON("assets/json/InputTemplate.JSON");
+		jsonParsingObject = JSONUtil.parseJSON("assets/json/CommissionAssign.JSON");
 	}
 	
 	@Test
